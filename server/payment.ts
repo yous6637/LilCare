@@ -245,7 +245,6 @@ export const PreRegister = async (
       .insert(Preregistrations)
       .values(params)
       .returning(getTableColumns(Preregistrations));
-
     if (!results) throw new Error("Preregistration not created in my db");
 
     const invoice = (
