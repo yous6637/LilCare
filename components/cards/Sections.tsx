@@ -28,13 +28,11 @@ const SectionCard = (section: SectionData) => {
           <Link href={`${window.location.pathname}?sectionId=${section.id}`}>
             <CardTitle className="mr-auto"> {section.name} </CardTitle>
           </Link>
-          {/* <Badge className='text-lg' variant="destructive"> {props.price} da</Badge> */}
         </div>
       </CardHeader>
       <CardContent>{section.description}</CardContent>
       <CardFooter className="flex justify-between">
-        {/* <Button variant="outline">Cancel</Button>
-            <Button>Deploy</Button> */}
+
         <h2>
           {" "}
           <span className="text-red-600 text-[16px]">Age : </span>

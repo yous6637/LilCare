@@ -145,7 +145,7 @@ function Home({
                 marginBottom: "0px",
               }}
             >
-              The LittleDino's mission is to provide affordable , high-quality
+              The LittleDino&apos;s mission is to provide affordable , high-quality
               early education and <br />
               childcare services for working families to ensur every child
             </p>

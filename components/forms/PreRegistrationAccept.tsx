@@ -153,7 +153,6 @@ const PreRegistrationAccept = ({onSubmit, onCancel}: Props) => {
                       src={field.value}
                     />
                   </div>
-                  {/* <img className='rounded-full w-32 h-32 object-cover border-2 border-white shadow' src= {form.watch().photo} alt="" /> */}
                 </FormLabel>
                 <FormControl className="w-full">
                   <Input

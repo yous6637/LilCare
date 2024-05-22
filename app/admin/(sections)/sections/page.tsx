@@ -57,7 +57,7 @@ const Page = async (props: Props) => {
 
           <Sections sections={Sectionsdata} />
         </section>
-       : <SectionDetails section={Sectionsdata?.at(0)!} children={children} educators={educators} />
+       : <SectionDetails kids={children} section={Sectionsdata?.at(0)!}  educators={educators} />
       
       }
       </div>

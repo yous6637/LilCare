@@ -189,7 +189,6 @@ const UserForm = (props: Props) => {
                       src={field.value}
                     />
                   </div>
-                  {/* <img className='rounded-full w-32 h-32 object-cover border-2 border-white shadow' src= {form.watch().photo} alt="" /> */}
                 </FormLabel>
                 <FormControl className="w-full">
                   <Input
@@ -396,7 +395,7 @@ const UserForm = (props: Props) => {
                       </SelectContent>
                     </Select>
                     <FormDescription className="min-[400px]:col-span-4 m-0">
-                      don't select anything
+                      don&apos;t select anything
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -431,7 +430,7 @@ const UserForm = (props: Props) => {
                       </SelectContent>
                     </Select>
                     <FormDescription className="min-[400px]:col-span-4 m-0">
-                      don't select anything
+                      don&apos;t select anything
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

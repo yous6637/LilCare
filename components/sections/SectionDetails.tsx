@@ -39,11 +39,11 @@ import Calendar from "@/components/calendar/Calendar";
 
 type Props = {
   section: SectionData;
-  children: Children[];
+  kids: Children[];
   educators: UsersAuthSelect[];
 };
 
-const SectionDetails = ({ section, children, educators }: Props) => {
+const SectionDetails = ({ section, kids, educators }: Props) => {
   const { currentUser } = useSessionUser();
   const modulesState = useApi(getModules, []);
   const sectionModulesState = useApi(
@@ -103,7 +103,7 @@ const SectionDetails = ({ section, children, educators }: Props) => {
             Children in this Section
           </h3>
           <List>
-            {children.map((child, index) => (
+            {kids.map((child, index) => (
               <ListItem key={index} className="mb-2">
                 <div className="flex items-center space-x-4 rtl:space-x-reverse">
                   <div className="flex-shrink-0">
@@ -266,7 +266,7 @@ export const SectionModulesDialog = ({
           <DialogHeader>
             <DialogTitle>Modules</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Make changes to your profile here. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
 
@@ -373,7 +373,7 @@ export const SectionEducatorsDialog = ({
           <DialogHeader>
             <DialogTitle>Educators</DialogTitle>
             <DialogDescription>
-              Make changes to Section's Educator.
+              Make changes to Section&apos;s Educator.
             </DialogDescription>
           </DialogHeader>
 

@@ -37,7 +37,7 @@ const Page = async (props: Props) => {
         {sectionId && (
           <SectionDetails
             section={Sectionsdata?.at(0)!}
-            children={children}
+            kids={children}
             educators={educators}
           />
         )}

@@ -75,7 +75,7 @@ function ModuleForm({ defaultValue, onSubmit, onClose }: Props) {
             Create Module{" "}
           </DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

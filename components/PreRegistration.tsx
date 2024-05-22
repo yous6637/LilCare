@@ -319,8 +319,7 @@ export default function PreregistrationForm({}: Props) {
                           </FormItem>
                         )}
                       />
-                      {/* Additional fields for parent's name, child's name, birth date, etc. */}
-                      {/* ... */}
+
                     </CardContent>
                     <CardFooter className="justify-end">
                       <Button

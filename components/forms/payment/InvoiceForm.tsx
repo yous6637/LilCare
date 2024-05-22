@@ -38,7 +38,7 @@ import { useApi } from "@/lib/hooks";
 import { getParents } from "@/server/users";
 import { toast } from "sonner";
 import { createInvoices } from "@/server/payment";
-import { UsersAuthSelect } from '../../../types/data';
+import { UsersAuthSelect } from '@/types/data';
 
 type FormSubmit = (typeof InvoiceFormSchema._type)[];
 

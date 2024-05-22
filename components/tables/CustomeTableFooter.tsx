@@ -27,7 +27,6 @@ import {
 } from "@/components/ui/card";
 import { parse } from "path";
 import { Children, InvoiceData, UsersAuthSelect } from "@/types";
-import clas from '@/image/Image (10).png';
 
 type Props = TableState<InvoiceData | UsersAuthSelect | Children | any>;
 

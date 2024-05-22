@@ -137,7 +137,6 @@ const ChatForm = (props: Props) => {
                   </Avatar>
                 </div>
 
-                {/* <img className='rounded-full w-32 h-32 object-cover border-2 border-white shadow' src= {form.watch().photo} alt="" /> */}
               </FormLabel>
               <FormControl>
                 <Input

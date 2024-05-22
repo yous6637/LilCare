@@ -7,7 +7,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { supabaseServer } from "@/lib/supabase/server";
 import { format } from "date-fns";
 import { supabaseBrowser } from "@/lib/supabase/browser";
 import { useApi } from "@/lib/hooks";
