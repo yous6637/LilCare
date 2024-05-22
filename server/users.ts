@@ -78,9 +78,11 @@ export const createUser = async (params: CreateUserParams) => {
         const ParentColumns = getTableColumns(parents)
         const cust = await chargily.createCustomer({name: `${firstName} ${lastName}`, email, phone})
         const myCustomers = await db.insert(customers).values({id : cust.id, name: `${firstName} ${lastName}`, email, phone}).returning(getTableColumns(customers));
+        const insertedCustomerId = myCustomers?.at(0)?.id;
+        if (!insertedCustomerId) return {error: "failed to insert customer", data: null}
         results = await db
           .insert(parents)
-          .values({ ...params, userId: insertedUserId,customerId: customer.id }).returning(ParentColumns);
+          .values({ ...params, userId: insertedUserId,customerId: insertedCustomerId }).returning(ParentColumns);
         break;
       case "THERAPIST":
         // Handle therapist creation logic

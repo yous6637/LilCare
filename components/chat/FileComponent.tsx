@@ -7,10 +7,7 @@ type FileProps = {
 
 const FileComponent = ({ files }: FileProps) => {
     const getFileIcon = (type: string) => {
-        if (type.startsWith('image/')) return <Image />;
-        if (type.startsWith('video/')) return <Video />;
-        if (type.startsWith('audio/')) return <Music />;
-        if (type === 'application/pdf') return <FileText />;
+
         return <File />;
     };
 
@@ -25,13 +22,13 @@ const FileComponent = ({ files }: FileProps) => {
         <>
         {(files !== null) && <div className="file-list">
             {files?.map((file, index) => (
-                file.type == 'jpg' || 'jpeg' || 'png' || 'gif' || "webp" ? <img key={index} src={file.url} alt="" className="max-w-full h-auto rounded-lg mb-2" /> :
+                file.type === ("jpg" || "jpeg" || "png" || "gif" || "webp") ? <img key={index} src={file.url} alt="" className="max-w-full h-auto rounded-lg mb-2" /> :
                     <div key={index} className="file-item flex items-center gap-4 p-2 border-b">
                         <div className="file-icon">
                             {getFileIcon(file.type)}
                         </div>
                         <div className="file-details flex-1">
-                            <a href={file.url} target="_blank" rel="noopener noreferrer" className="file-name text-blue-500 underline">
+                            <a href={file.url} target="_blank" rel="noopener noreferrer" className="file-name text-sm text-blue-500 underline">
                                 {file.name}
                             </a>
                             <div className="file-type text-gray-500 text-sm">{file.type}</div>

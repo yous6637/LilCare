@@ -61,7 +61,7 @@ export default function MessageForm({ sender, chat }: Props) {
   };
 
   const handleSendMessage = async (text: string) => {
-    if (!text.trim() || !user?.id) {
+    if (!text?.trim() || !user?.id) {
       toast.error("Message cannot be empty or user not found!!");
       return;
     }
@@ -102,7 +102,7 @@ export default function MessageForm({ sender, chat }: Props) {
   return (
       <div className="p-5">
         <div className="flex gap-1">
-          {imagesData.map((image, id) => (
+          {imagesData?.map((image, id) => (
               <div key={id} className="relative">
                 <div className="absolute w-full h-full hover:flex">
                   <button
@@ -111,7 +111,7 @@ export default function MessageForm({ sender, chat }: Props) {
                             prevImagesData.filter((i) => i !== image)
                         );
                       }}
-                      className="hidden w-full h-full cursor-pointer flex bg-muted/50 justify-center items-center"
+                      className=" w-full h-full cursor-pointer flex bg-muted/50 justify-center items-center"
                   >
                     <LucideMessageCircleX className="w-4 aspect-square" />
                   </button>
@@ -125,7 +125,7 @@ export default function MessageForm({ sender, chat }: Props) {
               className="flex gap-2"
               onSubmit={(e) => {
                 e.preventDefault();
-                handleSendMessage(form.getValues().text);
+                handleSendMessage(form.getValues("text"));
               }}
           >
             <FormField
@@ -142,6 +142,7 @@ export default function MessageForm({ sender, chat }: Props) {
                       <Input
                           placeholder="send message"
                           onChange={handleImage}
+                          value = {field.value}
                           type="file"
                           id="upload_file"
                           className="hidden"
@@ -156,6 +157,7 @@ export default function MessageForm({ sender, chat }: Props) {
                     <Input
                         placeholder="send message"
                         onChange={field.onChange}
+                        value = {field.value}
                     />
                 )}
             />

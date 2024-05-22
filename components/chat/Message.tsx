@@ -27,43 +27,7 @@ type Props = {
 const Message: React.FC<Props> = ({ message, currentUser }) => {
   const isCurrentUser = message.metadata.sender?.id === currentUser?.id;
 
-  const renderFile = (file: { url: string; type: string }, idx: number) => {
-    switch (file.type) {
-      case 'jpg' || 'jpeg' || 'png' || 'gif' || "webp":
-        return <img key={idx} src={file.url} alt="" className="max-w-full h-auto rounded-lg mb-2" />;
-      case 'video':
-        return (
-          <video key={idx} controls className="max-w-full h-auto rounded-lg mb-2">
-            <source src={file.url} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        );
-      case 'pdf':
-        return (
-          <a
-            key={idx}
-            href={file.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block p-2 bg-gray-100 rounded-lg mb-2 text-red-600 hover:underline"
-          >
-            View PDF
-          </a>
-        );
-      default:
-        return (
-          <a
-            key={idx}
-            href={file.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block p-2 bg-gray-100 rounded-lg mb-2 text-blue-600 hover:underline"
-          >
-            View Document
-          </a>
-        );
-    }
-  };
+    console.log(message)
 
   return (
     <div
@@ -83,7 +47,7 @@ const Message: React.FC<Props> = ({ message, currentUser }) => {
         </Avatar>
       )}
       <div className="flex flex-col max-w-md">
-        <FileComponent files={message.files} />
+        <FileComponent files={message?.files} />
         <div
           className={cn(
             "rounded-lg px-3 text-sm py-1 shadow-md ring-1 ring-gray-900/10",

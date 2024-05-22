@@ -95,7 +95,7 @@ export function EditAlert() {
 			  })));
 			const { error } = await updateMessage({...actionMessage, text: text})
 			if (error) {
-				toast.error(error.message);
+				toast.error(error);
 			} else {
 				toast.success("Update Successfully");
 			}

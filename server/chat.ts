@@ -112,7 +112,7 @@ export const updateMessage = async (message: MessageData) => {
     return { data: res, error: null };
   } catch (error) {
     const err = error as Error;
-    return { data: null, error: err };
+    return { data: null, error: err.message };
   }
 };
 
