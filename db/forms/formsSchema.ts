@@ -1,7 +1,5 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { CustomerData } from '../../types/data';
-import { Customer } from '../../vendor/chargily/src/types/data';
 import {
   parents,
   sections,
@@ -165,3 +163,24 @@ export const PreRegistrationAcceptSchema = ParentParams.extend({
 
 
 export const MessageInsertSchema = createInsertSchema(messages);
+
+
+export const ScheduleFormSchema = z.object({
+    type : z.enum(["education", "nutrition", "event"]),
+    event: EventsInsertSchema.optional(),
+    education: z.object({
+        title: z.string(),
+        description: z.string(),
+        start: z.string(),
+        end: z.string(),
+        sectionId: z.number(),
+        moduleId: z.number()
+    }).optional(),
+    nutrition: z.object({
+        title: z.string(),
+        description: z.string(),
+        start: z.string(),
+        end: z.string(),
+        content: z.string().array(),
+    }).optional()
+});

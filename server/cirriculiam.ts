@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/db";
 import { AxiosError } from "axios";
-import { educational_schedule, modules, schedules, seasons, section_modules } from "@/db/schema";
+import {educationalSchedule, modules, schedules, seasons, section_modules } from "@/db/schema";
 import { eq, getTableColumns } from "drizzle-orm";
 import { toSql } from "@/lib/utils";
 import { ModuleInsert, Concrete, Section, SectionData, EducationalScheduleData, ModuleData, SectionModuleData } from "@/types";
@@ -28,11 +28,11 @@ export const createEducationalSchedule = async ({
   section: SectionData;
   schedules: EducationalScheduleData[];
 }) => {
-  const columns = getTableColumns(educational_schedule);
+  const columns = getTableColumns(educationalSchedule);
 
   const data = schedules.map((schedule) => ({ scheduleId: schedule.id, sectionId: section.id}));
   const res = await db
-    .insert(educational_schedule)
+    .insert(educationalSchedule)
     .values(data)
     .returning(columns);
 
@@ -48,7 +48,7 @@ export async function getSectionModules(params?: Concrete<SectionModuleData>) : 
         .from(section_modules)
         .leftJoin(modules, eq(section_modules.moduleId, modules.id))
     ).map((row) => row.modules as ModuleData);
-  const SectionModules = await ( await db
+  const SectionModules =  ( await db
     .select()
     .from(section_modules)
     .leftJoin(modules, eq(section_modules.moduleId, modules.id))

@@ -1,14 +1,11 @@
 "use client";
 
-import { User } from "@supabase/supabase-js";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -19,14 +16,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Avatar } from "../ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Separator } from "../ui/separator";
-import { List, ListItem } from "../ui/list";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Label } from "@radix-ui/react-label";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Separator } from "@/components/ui/separator";
+import { List, ListItem } from "@/components/ui/list";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 import {
   addSectionModules,
@@ -34,14 +29,13 @@ import {
   getSectionModules,
 } from "@/server/cirriculiam";
 import { useEffect, useState } from "react";
-import { Checkbox } from "../ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { clickOn } from "@/lib/helpers";
-import { Loader2 } from "lucide-react";
+import {Loader2} from "lucide-react";
 import { Children, ModuleData, SectionData, SectionModuleData, UsersAuthSelect } from "@/types";
 import { ApiState, useApi, useModuleStore, useSessionUser, useUserTable } from "@/lib/hooks";
-// import WeeklyScheduleForm from "../Calendar/WeeklySchedulForm";
-// import EducationalCalendar from "../Calendar/EducationalCalendar";
+import Calendar from "@/components/calendar/Calendar";
 
 type Props = {
   section: SectionData;
@@ -53,7 +47,7 @@ const SectionDetails = ({ section, children, educators }: Props) => {
   const { currentUser } = useSessionUser();
   const modulesState = useApi(getModules, []);
   const sectionModulesState = useApi(
-    async () => await getSectionModules({ section: section.id })
+    async () => await getSectionModules({ section: section.id }),[section]
   );
 
   const handleSubmitSectionModules = async (data: SectionModuleData[]) => {
@@ -173,11 +167,11 @@ const SectionDetails = ({ section, children, educators }: Props) => {
           ))}
         </TabsContent>
         <TabsContent value="Schedule">
-          {/* <EducationalCalendar
-            modulesState={sectionModulesState}
-            section={section}
-            currentUser={currentUser}
-          /> */}
+          <Calendar
+              modules = {modulesState?.data || []}
+              section = {section}
+
+          />
         </TabsContent>
         <TabsContent value="Modules">
           <div className="flex justify-between">
@@ -225,7 +219,7 @@ export const SectionModulesDialog = ({
   section: SectionData;
   onSubmit: (data: SectionModuleData[]) => void;
 }) => {
-  const [isSubmitting, setIsSbumitting] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { rows, itemsPerPage, addToSelectedRows, selectedRows, deselectRow } =
     useModuleStore((state) => state);
 
@@ -253,7 +247,7 @@ export const SectionModulesDialog = ({
             e.preventDefault();
             console.log({ selectedRows });
 
-            setIsSbumitting(true);
+            setIsSubmitting(true);
 
             onSubmit(
               selectedRows.map((row) => ({
@@ -262,7 +256,7 @@ export const SectionModulesDialog = ({
                 data: ""
               }))
             );
-            setIsSbumitting(false);
+            setIsSubmitting(false);
 
             setTimeout(() => {
               clickOn("close_modules_trigger");
@@ -305,9 +299,7 @@ export const SectionModulesDialog = ({
                   <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
                     {module.name}
                   </p>
-                  {/* <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                          email@flowbite.com
-                        </p> */}
+
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"></div>
               </ListItem>
@@ -330,6 +322,7 @@ export const SectionModulesDialog = ({
   );
 };
 
+// @ts-ignore
 export const SectionEducatorsDialog = ({
   educatorsState,
   section,
@@ -339,7 +332,7 @@ export const SectionEducatorsDialog = ({
   section: SectionData;
   onSubmit: (data: UsersAuthSelect[]) => void;
 }) => {
-  const [isSubmitting, setIsSbumitting] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { rows, itemsPerPage, addToSelectedRows, selectedRows, deselectRow } =
     useUserTable((state) => state);
 
@@ -367,10 +360,10 @@ export const SectionEducatorsDialog = ({
             e.preventDefault();
             console.log({ selectedRows });
 
-            setIsSbumitting(true);
+            setIsSubmitting(true);
 
             onSubmit(selectedRows);
-            setIsSbumitting(false);
+            setIsSubmitting(false);
 
             setTimeout(() => {
               clickOn("close_educators_trigger");
@@ -415,9 +408,7 @@ export const SectionEducatorsDialog = ({
                       " " +
                       educator.rawUserMetaData?.lastName}
                   </p>
-                  {/* <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                          email@flowbite.com
-                        </p> */}
+
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"></div>
               </ListItem>

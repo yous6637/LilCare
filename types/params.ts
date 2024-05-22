@@ -65,7 +65,6 @@ import {
 
     export type NotificationInsert = typeof notifications.$inferInsert;
 
-    export type PreregistrationInsert = typeof Preregistrations.$inferInsert;
 
     export type SectionModuleInsert = typeof section_modules.$inferInsert;
 
@@ -153,5 +152,5 @@ import {
     education: EducationalScheduleInsert
   } | {
     type : "nutrition"
-    event: NutritionInsert
+    nutrition: NutritionInsert
   })

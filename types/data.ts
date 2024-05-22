@@ -171,3 +171,10 @@ export type ChatMessage = Omit<MessageData, "chat" | "sender"> & {
   sender: UserAuthData;
 };
 export type EventSelect = Omit<EventData, "service"> & { service: ServiceData };
+
+
+
+export interface ServerResponse<T> {
+  data: T;
+  error: null;
+}

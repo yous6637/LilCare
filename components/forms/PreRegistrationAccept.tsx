@@ -329,7 +329,7 @@ const PreRegistrationAccept = ({onSubmit, onCancel}: Props) => {
           {/* Dynamic fields based on the role */}
 
           <div className="flex gap-3 justify-end">
-            <Button variant={"outline"} onClick={(e) => {onCancel?.()}}> Cancle </Button>
+            <Button type = "button" variant={"outline"} onClick={(e) => {onCancel?.()}}> Cancle </Button>
             <Button className="lowercase" type="submit">
               {isSubmitting && <Loader2 className="animate-spin" />}
               Accept
