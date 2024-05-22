@@ -1,7 +1,7 @@
 export * from "./NavItem";
 export * from "./table";
 export * from "./list";
-export * from "./button";
+export { Button } from "./button";
 export * from "./input";
 export * from "./label";
 export * from "./select";
