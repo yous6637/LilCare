@@ -68,9 +68,7 @@ export default async function Page(props: Props) {
                   {chat_messages ? (
                     <>
                       <MessageList
-                        chatMembers={chat_members}
                         currentChat={currentChat}
-                        user={currentUser!}
                         messages={chat_messages}
                       />
                     </>
