@@ -5,10 +5,10 @@ import { db } from "../db/index";
 import { Preregistrations, children, parents } from "@/db/schema";
 import { get } from "http";
 import { toSql } from "@/lib/utils";
-import { supaServerObj } from "@/lib/supabase/";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { PreRegistrationAcceptSchema } from "@/db/forms/formsSchema";
+import {supabaseServer} from "@/lib/supabase/server";
 
 export async function createPreRegistration(params: PreregestrationInsert) {
   const pregister = await db
@@ -37,7 +37,7 @@ export const acceptPreregistration = async (
   params: z.infer<typeof PreRegistrationAcceptSchema>
 ) => {
   try {
-    const supabase = await supaServerObj;
+    const supabase = await supabaseServer();
 
     const { email, password, phone } = params;
     const { child, ...rest } = params;
