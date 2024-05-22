@@ -1,11 +1,10 @@
 "use client"
-import { UsersAuthSelect } from "@/db";
+import { UsersAuthSelect } from "@/types";
 import { User } from "@supabase/supabase-js";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Label } from "@radix-ui/react-label";
 import { CalendarDays } from "lucide-react";
-import ChildrenCard from "../children/ChildrenCard";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
 import UserProfileForm from "./UserProfileForm";
@@ -99,13 +98,7 @@ function UserDetails({ currentUser, selectedUser }: Props) {
             <UserProfileForm currentUser={user} />
           </section>
         </article>
-        <article className="space-y-4 lg:col-span-2">
-          {user?.rawUserMetaData.role === "PARENT" && (
-            <section>
-              <ChildrenCard parentCardId={currentUser?.user_metadata.cardId} />
-            </section>
-          )}
-        </article>
+
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ type Props = {
 };
 
 const onSubmit = async (data: FormSubmit) => {
-  const { data: response, error } = await createInvoices(data, window.location.host);
+  const { data: response, error } = await createInvoices(data);
   if (response) {
     toast.success("Invoice created successfully");
   } else {

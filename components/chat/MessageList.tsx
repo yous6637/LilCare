@@ -19,7 +19,6 @@ type Props = {
 };
 
 const MessageList = ({
-  chatMembers,
   currentChat,
   messages: dbMessages,
   user,
@@ -31,40 +30,11 @@ const MessageList = ({
   const [notification, setNotification] = useState(0);
 
   const [userScrolled, setUserScrolled] = useState(false);
-  // const scrollContainer = scrollRef.current;
-  // if (
-  //   scrollContainer?.scrollTop <
-  //   scrollContainer?.scrollHeight - scrollContainer?.clientHeight - 10
-  // ) {
-  //   setNotification((current) => current + 1);
-  // }
 
-  // const { messages, currentUser } = useMessageRealTime({
-  //   initMessages: dbMessages,
-  //   user,
-  //   onInsert(payload) {
-  //     const scrollContainer = scrollRef.current;
-  //     if (
-  //       scrollContainer.scrollTop <
-  //       scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
-  //     ) {
-  //       setNotification((current) => current + 1);
-  //     }
-  //   },
-  // });
 
-  // const {
-  //   messages,
-  //   addMessage,
-  //   optimisticIds,
-  //   optimisticDeleteMessage,
-  //   optimisticUpdateMessage,
-  // } = useMessageRealTime({initMessages: dbMessages,user})
-
-  // useMessage((state) => ({ ...state, messages: dbMessages }));
   const [currentUser, setCurrentUser] = useState<User>();
 
-  const { data: messages, addRow } = useMessagesTable((state) => ({
+  const { data: stateMessages, addRow } = useMessagesTable((state) => ({
     ...state,
     data: dbMessages,
   }));
@@ -93,7 +63,7 @@ const MessageList = ({
           console.log(payload.new);
 
           const newMessage = payload.new as MessageData;
-          addRow(newMessage);
+          useMessagesTable.setState((state) => ({data : [...state.data,newMessage]}));
           const senderId = payload.new?.sender!;
           const currentUserId = currentUser?.id;
           console.log({ senderId, currentUserId, payload });
@@ -109,7 +79,7 @@ const MessageList = ({
         { event: "DELETE", schema: "public", table: "message" },
         (payload) => {
           useMessagesTable.setState({
-            data: messages.filter((message) => message.id !== payload.old.id),
+            data: stateMessages.filter((message) => message.id !== payload.old.id),
           });
         }
       )
@@ -137,7 +107,7 @@ const MessageList = ({
     return () => {
       channel.unsubscribe();
     };
-  }, [messages]);
+  }, [stateMessages]);
 
   const handleOnScroll = () => {
     const scrollContainer = scrollRef.current;
@@ -173,7 +143,7 @@ const MessageList = ({
           </Badge>
         </div>
         <div className="flex flex-col gap-2">
-          {messages?.map((message) => {
+          {useMessagesTable.getState().data?.map((message) => {
             return (
               <Message
                 key={message.id}

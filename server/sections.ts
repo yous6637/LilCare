@@ -30,7 +30,7 @@ export async function createSection(
     const { service, ...restParams } = params;
     console.log({ service });
     const { 
-      service: { id },
+      service : { id },
       prices,
     } = await createService(service!);
     if (!id || !prices) throw new Error("Service not created");
@@ -44,6 +44,7 @@ export async function createSection(
       .returning(getTableColumns(sections));
     return { data: response, error: null };
   } catch (error) {
-    return { data: null, error: error?.message! };
+    const err = error as Error
+    return { data: null, error: err?.message! };
   }
 }

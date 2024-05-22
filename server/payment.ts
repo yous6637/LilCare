@@ -37,9 +37,8 @@ import { chargily } from "./chargily";
 import { toSql } from "@/lib/utils";
 
 
-export const createService = async (
-  params: z.infer<typeof ServiceInsertSchema>
-) => {
+export const createService = async (params: z.infer<typeof ServiceInsertSchema>
+)=> {
   // create producet in chargily
   try {
     const productParams = {

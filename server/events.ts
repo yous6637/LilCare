@@ -40,12 +40,12 @@ export async function createEvent(params: z.infer<typeof EventsInsertSchema>) {
     const response = await db
       .insert(events)
       .values({
-        scheduleId: scheduleId, // Add the scheduleId property
         serviceId,
         title: params.title,
         photo: params.photo,
         description: params.description,
-        metadata: { prices, schedule: createdSchedule?.at(0)  },
+          scheduleId: scheduleId, // Add the scheduleId property
+          metadata: { prices, schedule: createdSchedule?.at(0)  },
       })
       .returning(getTableColumns(events));
 

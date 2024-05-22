@@ -14,11 +14,6 @@ import {
   getServices,
 } from "@/server/payment";
 import { getParents } from "@/server/users";
-import { DiscountData, InvoiceData, ServiceData } from "@/types";
-import { Send } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { customers } from "../../../db/modules/payment";
 import { supabaseServer } from "@/lib/supabase/server";
 import Link from "next/link";
 import ServiceDialog from "@/components/modals/ServiceDialog";
