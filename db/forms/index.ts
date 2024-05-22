@@ -15,7 +15,6 @@ import {
     modules,
     seasons,
     usersAuth,
-    educational_schedule,
     notifications,
     Preregistrations,
     section_modules,
@@ -24,7 +23,7 @@ import {
     admins,
     accountants,
     psychologists,
-    parents,
+    parents, educationalSchedule,
 } from "@/db/schema";
 import exp from "constants";
 
@@ -50,8 +49,7 @@ export const discountFormSelectSchema = createSelectSchema(discounts);
 export const serviceFormSchema = createInsertSchema(services);
 export const serviceFormSelectSchema = createSelectSchema(services);
 
-export const taxFormSchema = createInsertSchema(taxes);
-export const taxFormSelectSchema = createSelectSchema(taxes);
+
 
 export const invoiceFormSchema = createInsertSchema(invoices);
 export const invoiceFormSelectSchema = createSelectSchema(invoices);
@@ -71,8 +69,8 @@ export const moduleFormSelectSchema = createSelectSchema(modules);
 export const seasonFormSchema = createInsertSchema(seasons);
 export const seasonFormSelectSchema = createSelectSchema(seasons);
 
-export const educationalScheduleFormSchema = createInsertSchema(educational_schedule);
-export const educationalScheduleFormSelectSchema = createSelectSchema(educational_schedule);
+export const educationalScheduleFormSchema = createInsertSchema(educationalSchedule);
+export const educationalScheduleFormSelectSchema = createSelectSchema(educationalSchedule);
 
 export const notificationFormSchema = createInsertSchema(notifications);
 export const notificationFormSelectSchema = createSelectSchema(notifications);
