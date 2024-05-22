@@ -61,7 +61,6 @@ const MessageList = ({
         { event: "INSERT", schema: "public", table: "message" },
         async (payload) => {
           console.log(payload.new);
-
           const newMessage = payload.new as MessageData;
           useMessagesTable.setState((state) => ({data : [...state.data,newMessage]}));
           const senderId = payload.new?.sender!;
