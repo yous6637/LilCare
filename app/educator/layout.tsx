@@ -24,7 +24,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await supaServerObj;          
+
+  const supabase = await supabaseServer()
   const currentUser = (await supabase.auth.getUser()).data?.user;
 
   const headersList = headers();
