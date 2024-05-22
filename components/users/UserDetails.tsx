@@ -25,7 +25,7 @@ function UserDetails({ currentUser, selectedUser }: Props) {
     }
   }, [currentUser, selectedUser]);
   return (
-    <div>
+    <div className = "w-full">
       {" "}
       <header>
         {/* <div className="w-full rounded-md aspect-[50/9] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" /> */}

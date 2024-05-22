@@ -1,5 +1,5 @@
 "use server"
-import { eq } from 'drizzle-orm';
+import {eq, getTableColumns} from 'drizzle-orm';
 import { db } from '../db/index';
 import { notifications } from '../db/schema';
 import { supabaseServer } from '../lib/supabase/server';
@@ -20,15 +20,23 @@ import { NextResponse } from 'next/server';
 
 export const getNotifications = async () => {
 
+    try {
     const supabase = await supabaseServer()
     const currentUser  = (await supabase.auth.getSession()).data.session?.user
     if (currentUser) {
-    const resuls = await db.select().from(notifications).where(eq(notifications.user_id, currentUser?.id));
+    const results = await db.select().from(notifications).where(eq(notifications.user_id, currentUser?.id));
 
-    return resuls
-    } else {
+    return results
 
-        return NextResponse.error()
-     }
+    }
+        return []
+
+    }
+    catch (error)  {
+        const err = error as Error
+        return []
+    }
+
+
 
 }

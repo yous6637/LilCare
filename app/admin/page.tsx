@@ -14,8 +14,7 @@ export default async function Page({}: Props) {
   return (
     <div className="flex gap-3 h-full">
       <Sidebar active="Profile" />
-      <div className="flex-1 py-2 h-full overflow-auto">
-        <div className="container">
+        <div className="container main p-4">
           <UserForm
             role="ADMIN"
             FormType="update"
@@ -23,7 +22,6 @@ export default async function Page({}: Props) {
             selectedUser={UserToUserAuthSelect(currentUser)}
           />
         </div>
-      </div>
     </div>
   );
 }

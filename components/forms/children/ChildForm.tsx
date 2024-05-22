@@ -168,7 +168,7 @@ export default function ChildForm<T>(props: Props) {
                     <div className="rounded-full w-32 h-32 flex items-center justify-center border-2 border-white shadow hover:bg-opacity-70 overflow-hidden">
                       <CustomImage
                         className="rounded-full w-32 h-32 object-cover border-2 border-white shadow"
-                        src={field?.value}
+                        src={field?.value || undefined}
                         Alt={<Camera />}
                       />
                     </div>

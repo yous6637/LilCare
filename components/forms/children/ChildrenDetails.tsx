@@ -11,16 +11,17 @@ import { PsychologicalProfileForm } from "./PsychologicalProfileForm";
 import ChildForm from "./ChildForm";
 import { Children, MedicalRecordInsert } from "@/types";
 import { useSessionUser } from "@/lib/hooks";
-import { useSearchParams } from "next/navigation";
+import {redirect, useRouter, useSearchParams} from "next/navigation";
 import { Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { TabsList } from "@/components/ui/tabs";
 import Link from "next/link";
 import Map from "@/components/map/Map";
+import {PageTabs} from "@/lib/constant";
 
 const ChildProfile = ({ child }: { child?: Children }) => {
   const { currentUser } = useSessionUser();
   const searchParams = useSearchParams();
-
+  const router = useRouter()
   if (!currentUser) {
     return <div>loading...</div>;
   }
@@ -29,11 +30,15 @@ const ChildProfile = ({ child }: { child?: Children }) => {
     return <div>loading...</div>;
   }
 
-  const tap = searchParams.get("tab") || "profile";
+  const tab = searchParams.get("tab") ;
+  if (!tab || !PageTabs.child.tabs.includes(tab) ){
+    router.push(`/${PageTabs.child.defaultTab}`)
+    return;
+  }
 
   return (
     <div className="flex flex-col gap-3 max-w-4xl mx-auto h-screen overflow-auto">
-      <Tabs defaultValue={tap}>
+      <Tabs defaultValue={tab}>
         <TabsList className="w-full bg-inherit">
           <TabsTrigger value="profile">
             <Link

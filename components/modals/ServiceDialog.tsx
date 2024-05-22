@@ -38,8 +38,8 @@ export default function ServiceDialog({}: Props) {
         </DialogHeader>
         <ServiceForm
           onSubmit={async (params) => {
-            const { error, service, prices } = await createService(params);
-            if (service) {
+            const { error, data  } = await createService(params);
+            if (data?.service) {
               toast.success("Service created successfully");
               // onSubmit?.(data);
             } else {

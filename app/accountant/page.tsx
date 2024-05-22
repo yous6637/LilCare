@@ -9,7 +9,7 @@ import { UserToUserAuthSelect } from "@/lib/utils";
 type Props = {};
 
 export default async function Page({}: Props) {
-  const supabase = supabaseServer();
+  const supabase = await supabaseServer();
 
   const currentUser = (await supabase.auth.getSession()).data.session?.user;
 

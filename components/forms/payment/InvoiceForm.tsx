@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { services, customers } from "../../../db/modules/payment";
 import {
   CustomerData,
-  DiscountData,
+  DiscountData, ParentData,
   PriceData,
   Service,
   ServiceData,
@@ -60,7 +60,7 @@ const onSubmit = async (data: FormSubmit) => {
 
 function InvoiceForm({ services, discounts, customers }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [receipents, setReceipents] = useState<UsersAuthSelect[]>([]);
+  const [receipents, setReceipents] = useState<UsersAuthSelect<ParentData>[]>([]);
   const form = useForm<FormSubmit[0]>({
     resolver: zodResolver(InvoiceFormSchema),
   });
@@ -72,7 +72,7 @@ function InvoiceForm({ services, discounts, customers }: Props) {
         ...data,
         customer: {
           email: receipent.email!,
-          id: receipent.rawUserMetaData.customerId!,
+          id: receipent.rawUserMetaData?.customerId!,
           phone: receipent.rawUserMetaData.phone!,
           name: receipent.rawUserMetaData.lastName + " " + receipent.rawUserMetaData.firstName,
         },

@@ -1,6 +1,6 @@
 "use client";
 import {  ParentData, UserAuthData, UsersAuthSelect } from "@/types";
-import { ApiState, useUserTable } from "@/lib/hooks";
+import {ApiState, useParentsTable, useUserTable} from "@/lib/hooks";
 import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -40,18 +40,18 @@ import {
   PaginationNext,
 } from "../ui/pagination";
 import Link from "next/link";
-import CustomeTableFooter from "./CustomeTableFooter";
+import CustomTableFooter from "./CustomTableFooter";
 
 type Props = {
   apiState?: UsersAuthSelect[];
   // columnsMaker: () => ColumnDef<Parent>[];
-  onSelect?: (data: UsersAuthSelect[]) => void;
+  onSelect?: (data: UsersAuthSelect<ParentData>[]) => void;
   title?: string;
 };
 
 export default function ParentTable({ onSelect, apiState, title }: Props) {
 
-  const tableState = useUserTable((state) => ({ ...state, data: apiState }));
+  const tableState = useParentsTable((state) => ({ ...state, data: apiState || [] }));
 
   const {
     currentPage,
@@ -72,7 +72,7 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
     setPageIndex,
   } = tableState;
 
-  useUserTable.subscribe((state, prev) => {
+  useParentsTable.subscribe((state, prev) => {
     onSelect?.(state.getSelectedRows());
   });
 
@@ -120,7 +120,7 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
               <TableHead className="hidden md:table-cell text-center">
                 Birthdate
               </TableHead>
-              
+
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -147,7 +147,7 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
                     alt="parent image"
                     className="aspect-square rounded-md object-cover"
                     height="64"
-                    src={parent?.rawUserMetaData?.photo}
+                    src={parent?.rawUserMetaData?.photo! || undefined}
                     width="64"
                   />
                 </TableCell>
@@ -160,14 +160,14 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
                 <TableCell className="hidden text-center md:table-cell">
                   {parent.rawUserMetaData?.birthDate}
                 </TableCell>
-                
+
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </CardContent>
-      
-      <CustomeTableFooter {...tableState}  />
+
+      <CustomTableFooter {...tableState}   />
 
     </Card>
   );

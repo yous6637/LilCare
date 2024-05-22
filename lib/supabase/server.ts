@@ -1,18 +1,25 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { Database } from "../types/supabase";
+import {NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PUBLIC_SUPABASE_URL} from "@/lib/constant";
 
-export const supabaseServer = () => {
+export const supabaseServer = async () => {
 	const cookieStore = cookies();
 
-	return createServerClient<Database>(
-		"https://egrsstxcjchpqgschypq.supabase.co",
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVncnNzdHhjamNocHFnc2NoeXBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU3OTc1MDUsImV4cCI6MjAzMTM3MzUwNX0.FfPAWtXcIQolxcCilmz_lwhkvAcWPz_nnmK9HR0Vfko",
+	return  createServerClient<Database>(
+		NEXT_PUBLIC_SUPABASE_URL,
+		NEXT_PUBLIC_SUPABASE_ANON_KEY,
 		{
 			cookies: {
 				get(name: string) {
 					return cookieStore.get(name)?.value;
 				},
+				remove(key) {
+					 cookieStore.delete(key)
+				},
+				set (key,value) {
+					cookieStore.set(key, value)
+				}
 			},
 		}
 	);

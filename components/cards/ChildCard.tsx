@@ -14,7 +14,7 @@ function ChildCard({ child }: Props) {
       <CardContent className="p-2">
         <div className="flex items-center gap-3">
           <CustomImage
-            src={child?.photo}
+            src={child?.photo || undefined}
             alt={child?.firstName}
             className="w-16 h-16 rounded-full"
           />

@@ -21,10 +21,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SectionsInsertSchema } from "@/db/forms/formsSchema";
-import { toast } from "sonner";
 import { useState } from "react";
 import { CustomImage, Textarea } from "../ui";
-import { Images, Inbox, Loader2 } from "lucide-react";
+import { Inbox, Loader2 } from "lucide-react";
 import { clickOn } from "@/lib/helpers";
 import { postImage } from "@/lib/apis";
 
@@ -34,7 +33,7 @@ type FormData = z.infer<typeof formSchema>;
 
 type FormProps = {
   default?: Partial<FormData>;
-  onSubmit?: (data: FormData) => Promise<any>;
+  onSubmit?: (data: z.infer<typeof formSchema>) => Promise<any>;
   onClose?: () => void;
 };
 
@@ -46,21 +45,23 @@ export default function SectionsForm({ onSubmit }: FormProps) {
     resolver: zodResolver(formSchema),
   });
 
-  const checkSubmit = async (data: FormData) => {
+  const checkSubmit = async (data: z.infer<typeof formSchema>) => {
     // Handle form Last Check before submission  logic here
     // e.g., send POST request to your API endpoint to add the parent to the database
     if (image) {
+        setIsUploading(true)
     const { name , description , photo, service : {prices}} = data
     let imageRes = await postImage({ file: image });
-    const params = { name, description, photo: imageRes.url, service : {
-      name: name,
-      description: description,
-      dtype: "section",
-      prices: prices,
-      Images: ""
-    } };
-      params.photo = imageRes.url,
-      params.service.Images = imageRes.url;
+    const params: FormData = { name, description, photo: imageRes.url, service : {
+            name: name,
+            description: description,
+            dtype: "section",
+            prices: prices,
+            Images: [],
+        } };
+          setIsUploading(false)
+
+        params.service.Images = [imageRes.url];
       console.log({params})
       onSubmit?.(params);
       return;
@@ -88,7 +89,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
           e.preventDefault();
           checkSubmit(form.getValues());
         }}
-        className="w-full space-y-6"
+        className="w-full space-y-6 max-w-xl mx-auto"
       >
         <FormField
           control={form.control}
@@ -98,10 +99,10 @@ export default function SectionsForm({ onSubmit }: FormProps) {
               <FormLabel htmlFor="photo" className="cursor-pointer">
                 <CustomImage
                   src={field.value as string}
-                  className="aspect-video object-cover w-full h-full rounded-md"
+                  className=" object-cover w-full h-64 rounded-md"
                   Alt={
                       isUploading ? (
-                        <div className="border rounded-md border-white flex hover:bg-opacity-70 items-center justify-center overflow-hidden  shadow w-full">
+                        <div className="border aspect-video rounded-md border-white flex hover:bg-opacity-70 items-center justify-center overflow-hidden  shadow w-full">
 
                         <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
                         <p className="mt-2 text-sm text-slate-400">
@@ -109,7 +110,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
                         </p>
                       </div>
                       ) : (
-                        <div className="border rounded-md border-white flex hover:bg-opacity-70 items-center justify-center overflow-hidden  shadow w-full">
+                        <div className="border aspect-video rounded-md border-white flex hover:bg-opacity-70 items-center justify-center overflow-hidden  shadow w-full">
 
                         <Inbox className="w-10 h-10 text-blue-500" />
                         <p className="mt-2 text-sm text-slate-400 text-center">
@@ -120,9 +121,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
                   }
                 />
               </FormLabel>
-              {/* <FormLabel htmlFor="photo">
-                  <div className="border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 px-2 flex flex-col justify-center items-center"></div>
-                </FormLabel> */}
+
               <FormControl>
                 <Input
                   className="hidden"
@@ -257,7 +256,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
         </div>
         <div className="flex justify-end gap-3">
           <Button
-            onClick={(e) => {
+            onClick={() => {
               clickOn("section-trigger-insert");
             }}
             variant={"outline"}

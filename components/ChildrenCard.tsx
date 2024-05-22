@@ -22,7 +22,7 @@ function ChildrenCard({ params }: Props) {
       <CardContent>
         {childrenState?.data?.map((kid, id) => (
           <div key={id} className="flex items-center gap-4">
-            <CustomImage className="" src={kid.photo} Alt={<Baby />} />
+            <CustomImage className="" src={kid?.photo || undefined} Alt={<Baby />} />
 
             <div className="grid gap-1">
               <p className="text-sm font-medium leading-none">

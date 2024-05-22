@@ -54,7 +54,7 @@ export const ServiceSelectSchema = createSelectSchema(services).extend({
 });
 
 export const SectionsInsertSchema = createInsertSchema(sections, {
-  service: ServiceInsertSchema.required(),
+  service: ServiceInsertSchema,
 });
 export const ScheduleInsertSchema = createInsertSchema(schedules, {
   start: z.string(),

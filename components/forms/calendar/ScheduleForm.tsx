@@ -23,7 +23,7 @@ type FormProps = {
     modules?: ModuleData[],
     section?: SectionData,
     schedule: {start: string, end: string}
-    onSubmit?: (data: FormData) => void;
+    onSubmit: (data: FormData) => void;
     onCancel?: () => void;
 };
 

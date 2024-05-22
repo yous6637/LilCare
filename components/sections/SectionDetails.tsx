@@ -36,6 +36,7 @@ import {Loader2} from "lucide-react";
 import { Children, ModuleData, SectionData, SectionModuleData, UsersAuthSelect } from "@/types";
 import { ApiState, useApi, useModuleStore, useSessionUser, useUserTable } from "@/lib/hooks";
 import Calendar from "@/components/calendar/Calendar";
+import {getEducators} from "@/server/users";
 
 type Props = {
   section: SectionData;
@@ -50,6 +51,9 @@ const SectionDetails = ({ section, kids, educators }: Props) => {
     async () => await getSectionModules({ section: section.id }),[section]
   );
 
+  const sectionEducators = useApi(async () => {
+    return await getEducators({section: section.id})
+  },[section])
   const handleSubmitSectionModules = async (data: SectionModuleData[]) => {
     try {
       const res = await addSectionModules(data);
@@ -110,7 +114,7 @@ const SectionDetails = ({ section, kids, educators }: Props) => {
                     <Avatar className="w-16 h-16 rounded-full">
                       <AvatarImage
                         className="w-16 h-16 rounded-full"
-                        src={child.photo}
+                        src={child.photo || undefined}
                       />
                       <AvatarFallback className="w-16 h-16 rounded-full">
                         {child.lastName?.at(0)?.toUpperCase() ||
@@ -122,9 +126,7 @@ const SectionDetails = ({ section, kids, educators }: Props) => {
                     <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
                       {child.firstName + " " + child.lastName}
                     </p>
-                    {/* <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                  email@flowbite.com
-                </p> */}
+
                   </div>
                   <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"></div>
                 </div>
@@ -138,7 +140,6 @@ const SectionDetails = ({ section, kids, educators }: Props) => {
               Educators in this Section
             </h3>
             <SectionEducatorsDialog
-              section={section}
               educatorsState={educators}
               onSubmit={(e) => {}}
             />
@@ -213,7 +214,7 @@ export default SectionDetails;
 export const SectionModulesDialog = ({
   modulesState,
   section,
-  onSubmit,
+  onSubmit ,
 }: {
   modulesState: ApiState<ModuleData[]>;
   section: SectionData;
@@ -325,11 +326,9 @@ export const SectionModulesDialog = ({
 // @ts-ignore
 export const SectionEducatorsDialog = ({
   educatorsState,
-  section,
   onSubmit,
 }: {
   educatorsState: UsersAuthSelect[];
-  section: SectionData;
   onSubmit: (data: UsersAuthSelect[]) => void;
 }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -384,7 +383,7 @@ export const SectionEducatorsDialog = ({
                 className="flex items-center space-x-4 rtl:space-x-reverse"
               >
                 <Checkbox
-                  checked={selectedRows.includes(educator)}
+                  checked={selectedRows.includes(educator) }
                   onCheckedChange={(e) => {
                     e ? addToSelectedRows(educator) : deselectRow(educator);
                     // onSelect?.(getSelectedRows());

@@ -53,7 +53,7 @@ const Page = async ({ params }: Props) => {
             <div className="rounded-full w-36 h-36 flex items-center justify-center border-2 border-white shadow hover:bg-opacity-70 overflow-hidden">
               <CustomImage
                 className="rounded-full w-36 h-36 object-cover border-2 border-white shadow"
-                src={child.photo}
+                src={child?.photo || undefined}
                 Alt={<Camera />}
               />
             </div>

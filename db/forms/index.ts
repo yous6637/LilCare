@@ -7,7 +7,6 @@ import {
     sections,
     discounts,
     services,
-    taxes,
     invoices,
     children,
     events,

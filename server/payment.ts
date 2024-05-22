@@ -13,7 +13,7 @@ import { addMonths, addYears, format } from "date-fns"; // Assuming you're using
 
 import {
   Concrete,
-  CustomerData,
+  CustomerData, CustomerInsert,
   DiscountData,
   DiscountInsert,
   InvoiceData,
@@ -87,11 +87,11 @@ export const createService = async (params: z.infer<typeof ServiceInsertSchema>
       .update(services)
       .set({ metadata: { prices: response } })
       .where(eq(services.id, serviceId));
-    return { service: service.at(0)!, prices: response, error: null };
+    return  {data: {service: service.at(0)!, prices : response}, error: null };
   } catch (error) {
     console.log({ error });
     const err = error as Error;
-    return { service: null, prices: null, error: err.message };
+    return {data: null , error: err.message };
   }
 };
 
@@ -220,25 +220,24 @@ export const PreRegister = async (
 ) => {
   try {
     // first step in preregistration create customer account chargily
-    const customer = await chargily.createCustomer({
+    const chargilyCustomer = await chargily.createCustomer({
       email: params.parentEmail,
       name: params.parentLastName + " " + params.parentFirstName,
       phone: params.parentPhone,
     });
 
-    const { id, name, email, phone } = customer;
+    const { id, name, email, phone } = chargilyCustomer;
     // second step in preregistration create customer row in my db
-    if (!customer) throw new Error("Customer not created");
+    if (!chargilyCustomer) return {data: null , error: "Customer not created"};
+
+    const customer : CustomerInsert = {
+      ...chargilyCustomer, phone: phone || "", email: email || ""
+    }
     const myCustomer = await db
       .insert(customers)
-      .values({
-        id,
-        name,
-        email,
-        phone,
-      })
+      .values(customer)
       .returning(getTableColumns(customers));
-    if (!myCustomer) throw new Error("Customer not created in my db");
+    if (!myCustomer) return {data: null, error :"Customer not created in my db"};
     // third step in preregistration create row in preregistration table
     const results = await db
       .insert(Preregistrations)

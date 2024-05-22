@@ -6,7 +6,6 @@ import { DiscountDialog } from "@/components/modals/DiscountDialog";
 import InvoiceTable from "@/components/tables/InvoicesTable";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { useApi, useSessionUser } from "@/lib/hooks";
 import {
   createInvoices,
   getDiscounts,
@@ -17,6 +16,8 @@ import { getParents } from "@/server/users";
 import { supabaseServer } from "@/lib/supabase/server";
 import Link from "next/link";
 import ServiceDialog from "@/components/modals/ServiceDialog";
+import {PageTabs} from "@/lib/constant";
+import {redirect} from "next/navigation";
 
 type Props = {
   searchParams: { [key: string]: string | undefined };
@@ -26,6 +27,11 @@ const Page = async ({ searchParams }: Props) => {
   const supabase = await supabaseServer();
 
   const tab = searchParams.tab;
+
+  if (!tab || !PageTabs.payout.tabs.includes(tab) ){
+    redirect(`/${PageTabs.payout.defaultTab}`)
+    return;
+  }
 
   const services = tab == "services" ? await getServices() : [];
   const discounts = tab == "discounts" ? await getDiscounts() : [];

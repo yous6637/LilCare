@@ -80,7 +80,7 @@ export const createUser = async (params: CreateUserParams) => {
         const myCustomers = await db.insert(customers).values({id : cust.id, name: `${firstName} ${lastName}`, email, phone}).returning(getTableColumns(customers));
         results = await db
           .insert(parents)
-          .values({ ...params, userId: insertedUserId }).returning(ParentColumns);
+          .values({ ...params, userId: insertedUserId,customerId: customer.id }).returning(ParentColumns);
         break;
       case "THERAPIST":
         // Handle therapist creation logic

@@ -23,7 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Inbox, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { postImage } from "@/lib/apis";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage, CustomImage} from "../ui/avatar";
 import {
   Select,
   SelectContent,
@@ -34,6 +34,7 @@ import {
 import { ApiState } from "@/lib/hooks";
 import { PriceData, ScheduleInsert, ServiceInsert } from "@/types";
 import { metadata } from "@/app/layout";
+import {toast} from "sonner";
 
 const formSchema = EventsInsertSchema;
 
@@ -47,9 +48,8 @@ type FormProps = {
 
 
 export default function EventForm({onSubmit, onCancel}: FormProps) {
-  const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState<File>();
-
+  const [submitting, setIsSubmitting] = useState(false)
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
@@ -71,11 +71,9 @@ export default function EventForm({onSubmit, onCancel}: FormProps) {
     } ;
 
     if (image) {
-      setIsUploading(true);
       let imageRes = await postImage({ file: image });
       serviceParams.Images = [imageRes.url];
       data.photo = imageRes.url;
-      setIsUploading(false);
     }
     data.service = serviceParams;
     const schedule : ScheduleInsert = {
@@ -109,11 +107,44 @@ export default function EventForm({onSubmit, onCancel}: FormProps) {
     <Form {...form}>
       <form
         onSubmit={(e) => {
+          setIsSubmitting(true)
           e.preventDefault();
-          checkSubmit(form.getValues());
+          checkSubmit(form.getValues()).catch((e) => {toast.error(e.message)});
+          setIsSubmitting(false)
+
         }}
-        className="space-y-6"
+        className="space-y-6 max-w-xl mx-auto pb-4"
       >
+          <FormField
+              control={form.control}
+              name="photo"
+              render={({ field }) => (
+                  <FormItem className="grid-cols-1">
+                      <FormLabel htmlFor="photo" className="cursor-pointer">
+                          <CustomImage Alt = {<div className="border-dashed border-2 rounded-md w-full h-full cursor-pointer bg-gray-50 py-8 px-2 flex flex-col justify-center items-center">
+                              <Inbox className="w-10 h-10 text-blue-500" />
+                              <p className="mt-2 text-sm text-slate-400 text-center">
+                                  Drag file here, or click to select files
+                              </p>
+                          </div>} src = {field.value} className = "rounded-md w-full h-64 object-cover border-2 border-white shadow"   />
+
+                      </FormLabel>
+                      <FormControl>
+                          <Input
+                              className="hidden"
+                              id="photo"
+                              type="file"
+                              onChange={handleImage}
+                          />
+                      </FormControl>
+                      {/* <FormLabel htmlFor="photo">
+                  <div className="border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 px-2 flex flex-col justify-center items-center"></div>
+                </FormLabel> */}
+
+                      <FormMessage />
+                  </FormItem>
+              )}
+          />
         <FormField
           control={form.control}
           name="title"
@@ -127,50 +158,7 @@ export default function EventForm({onSubmit, onCancel}: FormProps) {
             </FormItem>
           )}
         />
-        <div className="grid-cols-2 gap-3 w-full">
-          <FormField
-            control={form.control}
-            name="photo"
-            render={({ field }) => (
-              <FormItem className="grid-cols-1">
-                <FormLabel htmlFor="photo" className="cursor-pointer">
-                  <Avatar className="rounded-md w-full h-32 object-cover border-2 border-white shadow">
-                    <AvatarImage src={form.watch().photo} />
-                    <AvatarFallback>
-                      {isUploading ? (
-                        <div className="border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 px-2 flex flex-col justify-center items-center">
-                          <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
-                          <p className="mt-2 text-sm text-slate-400">
-                            Uploading...
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 px-2 flex flex-col justify-center items-center">
-                          <Inbox className="w-10 h-10 text-blue-500" />
-                          <p className="mt-2 text-sm text-slate-400 text-center">
-                            Drag file here, or click to select files
-                          </p>
-                        </div>
-                      )}
-                    </AvatarFallback>
-                  </Avatar>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className="hidden"
-                    id="photo"
-                    type="file"
-                    onChange={handleImage}
-                  />
-                </FormControl>
-                {/* <FormLabel htmlFor="photo">
-                  <div className="border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 px-2 flex flex-col justify-center items-center"></div>
-                </FormLabel> */}
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="schedule.start"
@@ -279,7 +267,6 @@ export default function EventForm({onSubmit, onCancel}: FormProps) {
               </FormItem>
             )}
           />
-        </div>
         <div className="flex justify-end gap-3 mt-4">
           <Button
             type="button"
@@ -293,7 +280,7 @@ export default function EventForm({onSubmit, onCancel}: FormProps) {
           </Button>
          
           <Button type="submit" className="">
-            Submit
+              { submitting && <Loader2 className = "animate-spin" />} Submit
           </Button>
         </div>
       </form>

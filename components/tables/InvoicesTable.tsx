@@ -47,7 +47,7 @@ import { User, UserResponse } from "@supabase/supabase-js";
 // import InvoiceDetails from "./InvoiceDetails";
 import { Badge } from "../ui/badge";
 import { InvoiceData } from "@/types";
-import CustomeTableFooter from "./CustomeTableFooter";
+import CustomTableFooter from "./CustomTableFooter";
 
 type Props = {
   apiState?: InvoiceData[];
@@ -69,7 +69,7 @@ export default function InvoiceTable({
     filename: `invoice_table.pdf`,
   });
 
-  const tableState = useInvoicesTable((state) => ({ ...state, data: apiState }));
+  const tableState = useInvoicesTable((state) => ({ ...state, data: apiState || [] }));
 
   const {
     currentPage,
@@ -105,6 +105,7 @@ export default function InvoiceTable({
     }
   }, [apiState]);
 
+  // @ts-ignore
   return (
     <>
       <div className="flex gap-3 my-3 justify-end w-full">
@@ -274,7 +275,7 @@ export default function InvoiceTable({
           {/* <InvoiceDetails /> */}
         </CardContent>
         {/* <EditAlert /> */}
-        <CustomeTableFooter {...tableState}  />
+        <CustomTableFooter {...tableState}  />
 
       </Card>
     </>

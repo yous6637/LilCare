@@ -1,9 +1,9 @@
 "use server";
-import { Concrete, EventData } from "@/types";
+import {Concrete, EventData, EventInsert} from "@/types";
 import { db } from "../db/index";
 import { events, schedules, services } from "@/db/schema";
 import { toSql } from "@/lib/utils";
-import { z } from "zod";
+import {undefined, z} from "zod";
 import { EventsInsertSchema } from "@/db/forms/formsSchema";
 import { createService } from "./payment";
 import { getTableColumns } from "drizzle-orm";
@@ -22,11 +22,11 @@ export async function getEvents(
 export async function createEvent(params: z.infer<typeof EventsInsertSchema>) {
   try {
     // create service
-    const createdService = await createService(params.service);
-    const serviceId = createdService.service?.id;
-    const prices = createdService.prices;
+    const  { data, error } = await createService(params.service);
+    const serviceId = data?.service?.id;
+    const prices = data?.prices;
 
-    if (!serviceId || !prices) throw new Error("Service not created");
+    if (!serviceId || !prices) return {data: null, error : "Service not created"};
 
     // create schedule
 
@@ -36,17 +36,20 @@ export async function createEvent(params: z.infer<typeof EventsInsertSchema>) {
       .returning(getTableColumns(schedules));
     const scheduleId = createdSchedule.at(0)?.id;
     // create event
-    if (!scheduleId) throw new Error("Schedule not created");
+    if (!scheduleId) return { data : null, error : "Schedule not created"};
+
+    const { start , end } = createdSchedule?.at(0)!
+    const event : EventInsert = {
+      serviceId,
+      title: params.title,
+      photo: params.photo,
+      description: params.description,
+      scheduleId: scheduleId, // Add the scheduleId property
+      metadata: { prices, schedule: { start, end}}
+    }
     const response = await db
       .insert(events)
-      .values({
-        serviceId,
-        title: params.title,
-        photo: params.photo,
-        description: params.description,
-          scheduleId: scheduleId, // Add the scheduleId property
-          metadata: { prices, schedule: createdSchedule?.at(0)  },
-      })
+      .values(event)
       .returning(getTableColumns(events));
 
     return { data: response, error: null };

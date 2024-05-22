@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { FileText, Image, Video, Music, File } from 'lucide-react'; // Icons for different file types
 
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useMessagesTable } from "@/lib/hooks";
 import { ChatMessage, MessageData } from "@/types";
 import { User } from "@supabase/supabase-js";
+import FileComponent from "@/components/chat/FileComponent";
 
 
 type Props = {
@@ -28,7 +29,7 @@ const Message: React.FC<Props> = ({ message, currentUser }) => {
 
   const renderFile = (file: { url: string; type: string }, idx: number) => {
     switch (file.type) {
-      case 'jpg' || 'jpeg' || 'png' || 'gif':
+      case 'jpg' || 'jpeg' || 'png' || 'gif' || "webp":
         return <img key={idx} src={file.url} alt="" className="max-w-full h-auto rounded-lg mb-2" />;
       case 'video':
         return (
@@ -82,7 +83,7 @@ const Message: React.FC<Props> = ({ message, currentUser }) => {
         </Avatar>
       )}
       <div className="flex flex-col max-w-md">
-        {message.files?.map((file, idx) => renderFile(file, idx))}
+        <FileComponent files={message.files} />
         <div
           className={cn(
             "rounded-lg px-3 text-sm py-1 shadow-md ring-1 ring-gray-900/10",

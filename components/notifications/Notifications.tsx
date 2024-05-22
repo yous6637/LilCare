@@ -10,14 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuPortal,
-  DropdownMenuSubContent,
-} from "../ui/dropdown-menu";
+ 
+} from "@/components/ui/dropdown-menu";
 import { supabaseBrowser } from "@/lib/supabase/browser";
-import { useApi, useNotificationsState } from "@/lib/hooks";
-import { Inotification } from "@/db/types";
+import { useApi, useNotificationsTable } from "@/lib/hooks";
+import { NotificationData } from "@/types";
 import { User } from "@supabase/supabase-js";
 import { Badge } from "../ui/badge";
 import { getNotifications } from "@/server/notifications";
@@ -31,7 +28,7 @@ type Props = {
 };
 
 function Notifications({ currentUser }: Props) {
-  const { notifications, addNotification } = useNotificationsState(
+  const { data : notifications, addRow } = useNotificationsTable(
     (state) => state
   );
 
@@ -41,7 +38,7 @@ function Notifications({ currentUser }: Props) {
 
   useEffect(() => {
     if (initNotifications instanceof Array) {
-      useNotificationsState.setState({ notifications: initNotifications });
+      useNotificationsTable.setState((state) => ({ data: initNotifications }));
       console.log({ initNotifications });
 
       const channel = supabase
@@ -50,7 +47,7 @@ function Notifications({ currentUser }: Props) {
           "postgres_changes",
           { event: "INSERT", schema: "public", table: "notification" },
           async (payload) => {
-            addNotification(payload.new as Inotification);
+            addRow(payload.new as NotificationData);
             console.log({ newNotification: payload.new });
             if (payload.new.receipent?.id !== currentUser?.id) {
               const audio = document.getElementById?.("a1") as HTMLAudioElement;

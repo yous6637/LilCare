@@ -1,28 +1,28 @@
-import { nutritionSchedule } from '../db/modules/calendar';
+import { nutritionSchedule } from '@/db/modules/calendar';
 import {
-        Chat,
-        messages,
-        sections,
-        discounts,
-        services,
-        invoices,
-        children,
-        events,
-        schedules,
-        jobs,
-        modules,
-        seasons,
-        usersAuth,
-        notifications,
-        Preregistrations,
-        section_modules,
-        ChatMembers,
-        MedicalRecord,
-        PsychologicalProfile,
-        educationalSchedule,
-        ChildLocation,
-        subscriptions,
-    } from "@/db/schema";
+    Chat,
+    messages,
+    sections,
+    discounts,
+    services,
+    invoices,
+    children,
+    events,
+    schedules,
+    jobs,
+    modules,
+    seasons,
+    usersAuth,
+    notifications,
+    Preregistrations,
+    section_modules,
+    ChatMembers,
+    MedicalRecord,
+    PsychologicalProfile,
+    educationalSchedule,
+    ChildLocation,
+    subscriptions, customers,
+} from "@/db/schema";
 
     // in this section we define the types of the params that we will be inserted in the database
 
@@ -65,6 +65,7 @@ import {
 
     export type NotificationInsert = typeof notifications.$inferInsert;
 
+    export type CustomerInsert = typeof customers.$inferInsert
 
     export type SectionModuleInsert = typeof section_modules.$inferInsert;
 

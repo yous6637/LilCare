@@ -8,14 +8,13 @@ import { ModuleInsert, Concrete, Section, SectionData, EducationalScheduleData, 
 
 export const createModule = async (module: ModuleInsert) => {
   try {
-    const result = await db.insert(modules).values(module);
-    console.log(result);
+    const result = await db.insert(modules).values(module).returning(getTableColumns(modules));
 
-    if (result.count === 0) {
-      throw new AxiosError(result.state.status);
+    if (result.length === 0) {
+      throw new AxiosError("Failed to Insert module");
     }
 
-    return result.count;
+    return result;
   } catch (error) {
     throw error;
   }

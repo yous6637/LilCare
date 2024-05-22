@@ -3,6 +3,7 @@ import {
   BlobServiceClient,
   StorageSharedKeyCredential,
 } from "@azure/storage-blob";
+import {AZURE_ACCOUNT_KEY, AZURE_ACCOUNT_NAME} from "@/lib/constant";
 
 class AzureStorage extends BlobServiceClient {
   constructor(accountName: string, accountSecret: string) {
@@ -80,8 +81,8 @@ declare global {
 }
 
 const azure = new AzureStorage(
-  "saasproject",
-  "gXVj8BJBpljBZzZSIrPKPW812Byh1k+ZLml6CSfY7HmxaZXJhPotoF2ZmpoItlCJRYRKaSFvW71x+AStDohJow=="
+    AZURE_ACCOUNT_NAME,
+    AZURE_ACCOUNT_KEY
 );
 
 export const saveFile = async (

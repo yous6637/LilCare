@@ -37,6 +37,7 @@ function Page({}: Props) {
                 try {
                   console.log(data);
                   const count = await createModule(data);
+                  modulesState.setData((prev) => [...(prev || []) ,...count]);
                   toast.success("Module created successfully");
                 } catch (error) {
                   toast.error("something went wrong");

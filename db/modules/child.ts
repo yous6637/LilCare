@@ -1,7 +1,17 @@
-import { serial, varchar, date, text, timestamp } from "drizzle-orm/pg-core";
+import {
+    serial,
+    varchar,
+    date,
+    text,
+    timestamp,
+    customType,
+    PgTextConfig,
+    ConvertCustomConfig, PgCustomColumnBuilder
+} from "drizzle-orm/pg-core";
 import { pgTable } from "drizzle-orm/pg-core";
 import { sections } from "../schema";
 import { parents } from "./users";
+
 
 
 
@@ -12,7 +22,7 @@ export const children = pgTable("children", {
     gender : varchar("gender", {length: 6, enum: ["Male", "Female"]}).notNull(),
     birthDate : date("birthDate").notNull(),
     section : serial("section").notNull().references(() => sections.id),
-    photo : text("photo").notNull(),
+    photo : text("photo"),
     parent :  serial("parentId").notNull().references(() => parents.cardId)
   })
 
@@ -35,7 +45,7 @@ export const ChildLocation = pgTable('child_geolocation', {
     previousDiseases: text('previous_diseases').array().notNull(),
     healthNotice: text('health_notice').notNull(),
     specialDiet: text('special_diet').notNull(),
-    bloodGroup: text('blood_group').notNull(), // Assuming blood group is stored as text
+    bloodGroup: text('blood_group', ).notNull(), // Assuming blood group is stored as text
     otherNotice: text('other_notice').notNull(),
     childId: serial('child_id').references(() => children.id)
   });

@@ -12,7 +12,7 @@ export async function generateMetadata({
 }: {
   params: Record<string, string>;
 }) {
-  const currentUser = (await supabase.auth.getUser()).data?.user
+  const currentUser = (await (await supabase).auth.getUser()).data?.user
 
   return {
     title: `Therapist ${currentUser?.user_metadata.firstName} - ${currentUser?.user_metadata?.lastName}`,
@@ -24,7 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentUser = (await supabase.auth.getUser()).data?.user
+  const currentUser =  (await (await supabase).auth.getUser()).data?.user
 
 
   const headersList = headers();

@@ -42,11 +42,11 @@ export const acceptPreregistration = async (
     const { email, password, phone } = params;
     const { child, ...rest } = params;
     console.log({params})
-    const insertedUser = supabase?.auth?.signUp({
+    const insertedUser = supabase?.auth.admin.createUser({
       email,
       password,
       phone,
-      options: { data: { ...rest } },
+      user_metadata : { ...rest }
     });
     const signUp = await insertedUser;
     console.log(signUp);
@@ -74,7 +74,7 @@ export const acceptPreregistration = async (
 
     return { data: res, error: null};
     }
-    throw new Error("User not created");
+    throw new Error("User has been created");
   } catch (error) {
     const err = error as Error
     return { data: null, error: err.message };

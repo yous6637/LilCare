@@ -32,7 +32,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { clickOn } from "@/lib/helpers";
 import { PreRegistrationDialog } from "../modals/PreRegistrationDialog";
-import CustomeTableFooter from "./CustomeTableFooter";
+import CustomTableFooter from "./CustomTableFooter";
 
 type Props = {
   apiState: PreregistrationData[];
@@ -177,7 +177,7 @@ export default function PreregistrationTable({
         </Table>
       </CardContent>
       <PreRegistrationDialog />
-      <CustomeTableFooter {...tableState} />
+      <CustomTableFooter {...tableState} />
     </Card>
   );
 }

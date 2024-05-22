@@ -29,10 +29,9 @@ export async function createSection(
   try {
     const { service, ...restParams } = params;
     console.log({ service });
-    const { 
-      service : { id },
-      prices,
-    } = await createService(service!);
+    const { data, error } = await createService(service!);
+    if (!data) return { data: null, error}
+    const { service : { id } , prices } = data
     if (!id || !prices) throw new Error("Service not created");
     const response = await db
       .insert(sections)

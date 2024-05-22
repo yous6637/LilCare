@@ -21,25 +21,21 @@ import {
   CardFooter,
 
 } from "@/components/ui/card";
-import { Children, InvoiceData, UsersAuthSelect } from "@/types";
+import {Children, InvoiceData, ParentData, UsersAuthSelect} from "@/types";
 
-type Props = TableState<InvoiceData | UsersAuthSelect | Children | any>;
+// @ts-ignore
+type Props = TableState | TableState<InvoiceData> | TableState<undefined> ;
 
-const CustomeTableFooter = (props: Props) => {
+const CustomTableFooter = (props: Props) => {
   const {
     currentPage,
     data,
     setItemsPerPage,
-    selectedRows,
     itemsPerPage,
-    selectAll,
-    rows,
-    deselectAll,
-    deselectRow,
+
     getNextPage,
     getPreviousPage,
-    getSelectedRows,
-    addToSelectedRows,
+
     pageCount,
     setPageIndex,
   } = props;
@@ -110,4 +106,4 @@ const CustomeTableFooter = (props: Props) => {
   );
 };
 
-export default CustomeTableFooter;
+export default CustomTableFooter;

@@ -3,12 +3,13 @@ import { AppWindow, Baby, Calendar, FileText, Home, LineChart, LucideIcon, Messa
 
 export const AdminSideItems = [
     { label: "Dashboard", href: "/admin/", Icon: Home },
-    { label: "Sections", href: "/admin/sections", Icon: Home },
+     { label: "Profile", href: "/admin/profile", Icon: UserRound },
+
+  { label: "Sections", href: "/admin/sections", Icon: Home },
     { label: "PreRegistrations", href: "/admin/preregestrations", Icon: AppWindow },
     
     { label: "Events", href: "/admin/events", Icon: Calendar },
     { label: "Parents", href: "/admin/parents", Icon: UserRound },
-    { label: "Calendar", href: "/admin/calendar", Icon: Calendar },
     { label: "Children", href: "/admin/children", Icon: Baby },
     { label: "Messanger", href: "/admin/messanger", Icon: MessageSquare },
     { label: "Team", href: "/admin/team", Icon: Users },

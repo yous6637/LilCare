@@ -1,24 +1,19 @@
 "use client";
-import { Children, UsersAuthSelect } from "@/types";
-import { ApiState, useChildrenTable, useSessionUser,  } from "@/lib/hooks";
-import { MoreHorizontal } from "lucide-react";
+import { Children } from "@/types";
+import {
+  useChildrenTable,
+  useSessionUser
+} from "@/lib/hooks";
 
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import {
   Table,
   TableBody,
@@ -30,24 +25,13 @@ import {
 
 import React, { useEffect } from "react";
 import { Checkbox } from "../ui/checkbox";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationEllipsis,
-  PaginationLink,
-  PaginationNext,
-} from "../ui/pagination";
-import { clickOn } from "@/lib/helpers";
 import { usePDF } from "react-to-pdf";
 import Link from "next/link";
 import ChildBadge from "../ChildBadge";
-import CustomeTableFooter from "./CustomeTableFooter";
+import CustomTableFooter from "./CustomTableFooter";
 
 type Props = {
   apiState: Children[];
-  // columnsMaker: () => ColumnDef<Parent>[];
   onSelect?: (data: Children[]) => void;
   title?: string;
 };
@@ -60,23 +44,17 @@ export default function ChildrenTable({ onSelect, apiState, title }: Props) {
   const tableState = useChildrenTable((state) => ({ ...state, data: apiState }));
 
   const {
-    currentPage,
     selectedRows,
     itemsPerPage,
     selectAll,
     rows,
     deselectAll,
     deselectRow,
-    listenData,
-    getNextPage,
-    getPreviousPage,
+
     getSelectedRows,
     addToSelectedRows,
-    pageCount,
-    setPageIndex,
   } = tableState;
 
-  const pageIndex = currentPage - 1;
 
   const { currentUser } = useSessionUser();
   useEffect(() => {
@@ -153,7 +131,7 @@ export default function ChildrenTable({ onSelect, apiState, title }: Props) {
                       alt="parent image"
                       className="aspect-square rounded-md object-cover"
                       height="64"
-                      src={child?.photo}
+                      src={child?.photo || undefined}
                       width="64"
                     />
                   </TableCell>
@@ -175,7 +153,7 @@ export default function ChildrenTable({ onSelect, apiState, title }: Props) {
             </TableBody>
           </Table>
         </CardContent>
-       <CustomeTableFooter {...tableState}  />
+       <CustomTableFooter {...tableState}  />
       </Card>
     </>
   );

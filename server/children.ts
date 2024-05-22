@@ -17,10 +17,8 @@ import {
   Concrete,
   MedicalRecordInsert,
 } from "@/types";
-import { childrenColumns } from "../lib/helpers";
 import { getTableColumns } from "drizzle-orm";
 import { toSql } from "@/lib/utils";
-import { error } from "console";
 
 export const getChildren = async (params?: Concrete<ChildData>) => {
   console.log({ params });

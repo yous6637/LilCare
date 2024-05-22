@@ -1,18 +1,10 @@
 "use client";
+import { GoogleMapsEmbed } from '@next/third-parties/google'
 
 import { useEffect, useRef, useState } from "react";
 import { ChildLocationData } from "@/types";
 import { supabaseBrowser } from "@/lib/supabase/browser";
-import "azure-maps-control/dist/atlas.min.css";
-import MarkerIcon from "@/image/map-marker-512.webp";
-import {
-  AzureMap,
-  AzureMapDataSourceProvider,
-  AzureMapHtmlMarker,
-  AzureMapLayerProvider,
-  AzureMapsProvider,
-  IAzureMapControls,
-} from "react-azure-maps";
+
 import {
   AuthenticationType,
   data,
@@ -20,6 +12,7 @@ import {
   Map,
   HtmlMarker,
 } from "azure-maps-control";
+import {AZURE_MAP_KEY} from "@/lib/constant";
 
 type Props = {
   location: {
@@ -46,7 +39,7 @@ const MapLocation = ({ location }: Props) => {
     let map = {
       authOptions: {
         authType: AuthenticationType.subscriptionKey,
-        subscriptionKey: "70kjOhvsHo2jSRA1GGeRvZ8mo3tNzs4Hvr9hkPZi2gI"!,
+        subscriptionKey: AZURE_MAP_KEY,
       },
       center: [
         parseFloat(coord?.latitude || "6.6"),
@@ -76,55 +69,15 @@ const MapLocation = ({ location }: Props) => {
   }, [coord]);
 
   return (
-    <div ref={mapRef} className="w-full h-full overflow-auto">
-      <AzureMapsProvider>
-        {mapState ? (
-          <AzureMap options={mapState}>
-            <AzureMapDataSourceProvider id="markersDataSource">
-              <AzureMapLayerProvider
-                type="HtmlMarkerLayer"
-                id="htmlMarkerLayer"
-              />
-              {renderHTMLPoint(
-                [
-                  parseFloat(coord?.latitude || "6.6"),
-                  parseFloat(coord?.longitude || "35.35"),
-                ],
-                "htmlMarkerLayer"
-              )}
-            </AzureMapDataSourceProvider>
-          </AzureMap>
-        ) : (
-          <></>
-        )}
-      </AzureMapsProvider>
-    </div>
+      <GoogleMapsEmbed
+          apiKey="XYZ"
+          height={200}
+          width="100%"
+          mode="place"
+          q="Brooklyn+Bridge,New+York,NY"
+      />
   );
 };
 
 export default MapLocation;
 
-const renderHTMLPoint = (coordinates: data.Position, id: string) => {
-  const rendId = Math.random().toString();
-  return (
-    <AzureMapHtmlMarker
-      key={id}
-      markerContent={
-        <div className="pulseIcon">
-          <img src={MarkerIcon.src} alt="Location" />
-        </div>
-      }
-      options={azureHtmlMapMarkerOptions(coordinates)}
-    />
-  );
-};
-
-const azureHtmlMapMarkerOptions = (
-  coordinates: data.Position
-): HtmlMarkerOptions => ({
-  position: coordinates,
-  color: "DodgerBlue",
-
-  text: "Child Location",
-  title: "Child Location",
-});

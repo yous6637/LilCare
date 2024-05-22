@@ -1,16 +1,16 @@
 
 import { ChargilyClient } from '@/vendor/chargily/src/classes/client';
+import {CHARGILIY_SK} from "@/lib/constant";
 
 
-const chargily_sk="test_sk_84hl2JihjzxatIXuLbo8AT9eibVjkA8QfUr0Stxu" ;
 
-if (!chargily_sk) {
+if (!CHARGILIY_SK) {
 
     throw new Error("chargily Api key is not defined");
 }
 
 const client = new ChargilyClient({
-  api_key: chargily_sk,
+  api_key: CHARGILIY_SK,
   mode: 'test', // Change to 'live' when deploying your application
 });
 

@@ -4,7 +4,7 @@ import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import {
     date,
   } from "drizzle-orm/pg-core";
-import {   sections } from "./";
+import {customers, sections} from "./";
 import { customType } from 'drizzle-orm/pg-core';
 import { User } from "@supabase/supabase-js";
 import { ParentData } from "@/types";
@@ -46,7 +46,9 @@ export const educators = pgTable("educators", {
     section : serial("section").notNull().references(() => sections.id),
     userId : uuid("userId").notNull().references(() => usersAuth.id),
     job : serial("job").notNull().references(() => jobs.id),
-  })
+    photo: text("photo").notNull().default(""),
+
+})
   
   export const parents = pgTable("parents", {
     cardId : serial("cardid").primaryKey().unique().notNull(),
@@ -54,6 +56,8 @@ export const educators = pgTable("educators", {
     lastName : varchar("lastName", {length: 100}).notNull(),
     birthDate : date("birthDate").notNull(),
     phone :  varchar("phone").notNull(),
+    photo: text("photo").notNull().default(""),
+    customerId : text("customer_id").notNull().references(() => customers.id),
     userId : uuid("userId").notNull().references(() => usersAuth.id)
   })
 
@@ -62,9 +66,11 @@ export const therapists = pgTable("therapists", {
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
     birthDate: date("birthDate").notNull(),
-    phone: varchar("phone").notNull(),
+  photo: text("photo").notNull().default(""),
+
+  phone: varchar("phone").notNull(),
     userId: uuid("userId").references(() => usersAuth.id),
-    specialization: varchar("specialization", { length: 100 })
+    specialization: varchar("specialization", { length: 100 }).notNull().default("")
   });
   
   export const admins = pgTable("admins", {
@@ -72,22 +78,28 @@ export const therapists = pgTable("therapists", {
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
     userId: uuid("userId").references(() => usersAuth.id),
+    photo: text("photo").notNull().default(""),
+
   });
   
   export const psychologists = pgTable("psychologists", {
     cardId: serial("cardId").primaryKey().unique().notNull(),
-    firstName: varchar("firstName", { length: 100 }).notNull(),
-    lastName: varchar("lastName", { length: 100 }).notNull(),
-    licenseNumber: varchar("licenseNumber", { length: 100 }).notNull(),
+    firstName: varchar("firstName", { length: 100 }).notNull().default(""),
+    lastName: varchar("lastName", { length: 100 }).notNull().default(""),
+    licenseNumber: varchar("licenseNumber", { length: 100 }).notNull().default(""),
     userId: uuid("userId").references(() => usersAuth.id),
+    photo: text("photo").notNull().default(""),
+
   });
   
   export const accountants = pgTable("accountants", {
     cardId: serial("cardId").primaryKey().unique().notNull(),
     firstName: varchar("firstName", { length: 100 }).notNull(),
     lastName: varchar("lastName", { length: 100 }).notNull(),
-    certification: varchar("certification", { length: 100 }),
+    certification: varchar("certification", { length: 100 }).notNull().default(""),
     userId: uuid("userId").references(() => usersAuth.id),
+    photo: text("photo").notNull().default(""),
+
   });
 
   export const Preregistrations = pgTable("preregistration", {

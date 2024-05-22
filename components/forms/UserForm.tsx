@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { format, formatDate } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,7 +16,7 @@ import {
   FormItem,
   FormDescription,
 } from "@/components/ui/form";
-import { Camera, Check, Loader2 } from "lucide-react";
+import { Camera, Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -25,17 +24,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ApiState } from "@/lib/hooks";
-import { createUser, upsertUser } from "@/server/users";
+import {  upsertUser } from "@/server/users";
 import { postImage } from "@/lib/apis";
-import { Avatar, AvatarFallback, AvatarImage, CustomImage } from "../ui/avatar";
-import { CreateUserParams, JobData, ParentData, PreregistrationData, SectionData, UserAuthData, UsersAuthSelect } from "@/types";
+import { CustomImage } from "../ui/avatar";
+import { CreateUserParams, JobData, ParentData, PreregistrationData, SectionData, UsersAuthSelect } from "@/types";
 import { CreateUserParamsSchema } from "@/db/forms/formsSchema";
 import { User } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
 import ChildrenCard from "../ChildrenCard";
-import { log } from "console";
-// Import your Zod schemas
+import {formatDate} from "date-fns";
 
 type CommonProps = {
   selectedUser?: UsersAuthSelect;
@@ -86,16 +83,7 @@ const UserForm = (props: Props) => {
   const [image, setImage] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  let defaultValue : ParentData | undefined = undefined;
-  // if(props.role === "PARENT" && props?.preregistration){
-  //   defaultValue = {
-  //     cardId: 0,
-  //     firstName: props?.preregistration.parentFirstName,
-  //     lastName: props?.preregistration.parentLastName,
-  //     phone: props?.preregistration.parentPhone,
-      
-  //   }
-  // }
+
   const form = useForm<z.infer<typeof CreateUserParamsSchema>>({
     resolver: zodResolver(CreateUserParamsSchema),
     defaultValues: props.selectedUser?.rawUserMetaData

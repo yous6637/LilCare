@@ -72,7 +72,7 @@ const Sidebar = ({ items, active }: Props) => {
   const userRole = currentUser?.user_metadata?.role as Role;
   const sidebarItems = userRole ? sideItems[userRole] : sideItems["PARENT"];
   return (size?.width! ) > 400 ? (
-    <div className="px-0 md:px-4 w-12 md:w-64 hidden min-[400px]:flex flex-col bg-secondary h-full gap-2">
+    <div className="px-0 py-3 overflow-auto md:px-4 w-12 md:w-64 hidden min-[400px]:flex flex-col bg-secondary h-full gap-2">
       {sidebarItems?.map((item) => (
         <SidebarItem key={item.href} active={active} {...item} />
       ))}

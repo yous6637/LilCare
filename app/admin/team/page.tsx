@@ -7,17 +7,20 @@ import {
   getTherapists,
   getUsers,
 } from "@/server/users";
-import ParentsTable from "@/components/tables/ParentsTable";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TabsContent } from "@radix-ui/react-tabs";
-import Link from "next/link";
+
 import Team from "@/components/Team";
+import {PageTabs} from "@/lib/constant";
+import {redirect} from "next/navigation";
 
 type Props = {
   searchParams: { [key: string]: string | undefined };
 };
 const Page = async ({ searchParams }: Props) => {
   const role = searchParams.role;
+  if (!role || !PageTabs.team.tabs.includes(role) ){
+    redirect(`/${PageTabs.team.defaultTab}`)
+    return;
+  }
 
   const users =
     role == "admin"

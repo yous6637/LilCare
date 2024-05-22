@@ -18,18 +18,18 @@ import {
 import { StateCreator, StoreApi, UseBoundStore, create } from "zustand";
 import { messages } from "../db/schema";
 import {
-  ChatMessage,
-  Children,
-  EventData,
-  InvoiceData,
-  MessageData,
-  ModuleData,
-  NotificationData,
-  PreregistrationData,
-  SectionData,
-  UserAuth,
-  UserAuthData,
-  UsersAuthSelect,
+    ChatMessage,
+    Children,
+    EventData,
+    InvoiceData,
+    MessageData,
+    ModuleData,
+    NotificationData, ParentData,
+    PreregistrationData,
+    SectionData,
+    UserAuth,
+    UserAuthData,
+    UsersAuthSelect,
 } from "@/types";
 import { UserToUserAuthSelect } from "./utils";
 
@@ -88,7 +88,7 @@ export const useApi = <T>(
   return { data, setData, isFetching, error: err };
 };
 
-export type TableState<T> = {
+export type TableState<T = any> = {
   data: T[];
   rows: T[];
   itemsPerPage: number;
@@ -214,6 +214,14 @@ export const useChildrenTable = create<TableState<Children>>()(
 export const useUserTable = create<TableState<UsersAuthSelect>>()(
   tableStoreSelector<UsersAuthSelect>()
 );
+
+export const useParentsTable = create<TableState<UsersAuthSelect<ParentData>>>()(
+    tableStoreSelector<UsersAuthSelect<ParentData>>()
+);
+
+export const useNotificationsTable  = create<TableState<NotificationData>>(
+    tableStoreSelector<NotificationData>()
+)
 
 // section state management
 export const useSectionTable = create<TableState<SectionData>>()(

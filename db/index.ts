@@ -2,9 +2,9 @@ import { PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 import * as schema from './schema'
+import {DATABASE_URL} from "@/lib/constant";
 
 
-const DATABASE_URL="postgres://postgres.egrsstxcjchpqgschypq:G2A0G0I1@youcef@aws-0-eu-central-1.pooler.supabase.com:5432/postgres"
 
 
 

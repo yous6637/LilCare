@@ -1,18 +1,16 @@
 "use client"
-import { Label } from "@radix-ui/react-label";
+import { Label } from "@/components/ui/label";
 import { Pencil } from "lucide-react";
 import React, { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
   CardFooter,
-} from "../ui/card";
-import { Input } from "../ui/input";
-import { User } from "@supabase/supabase-js";
-import page from "@/app/page";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   DialogHeader,
   DialogFooter,
@@ -21,8 +19,8 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
-} from "../ui/dialog";
-import { UsersAuthSelect } from "@/db";
+} from "@/components/ui/dialog";
+import { UsersAuthSelect } from "@/types";
 
 type Props = {
   currentUser?: UsersAuthSelect;

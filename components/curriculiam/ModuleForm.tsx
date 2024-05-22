@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { Plus } from "lucide-react";
+import {Loader2, Plus} from "lucide-react";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { postImage } from "@/lib/apis";
 import { format } from "date-fns";
@@ -34,7 +34,7 @@ type Props = {
 function ModuleForm({ defaultValue, onSubmit, onClose }: Props) {
   const form = useForm<formSchemaType>({ resolver: zodResolver(formSchema) });
   const [image, setImage] = useState<File>();
-
+  const [isSubmitting , setIsSubmitting] = useState(false)
   const checkSubmit = async (data: formSchemaType) => {
     if (image) {
       let imageRes = await postImage({ file: image });
@@ -154,6 +154,8 @@ function ModuleForm({ defaultValue, onSubmit, onClose }: Props) {
             variant={"primary"}
             type="submit"
           >
+            {isSubmitting && <Loader2 className = "animate-spin" />}
+            {" " }
             Submit
           </Button>
         </DialogFooter>

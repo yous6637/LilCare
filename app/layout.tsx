@@ -18,24 +18,7 @@ export  default async function RootLayout({
   children: React.ReactNode;
 }) {
 
-	const supabase = await supabaseServer();
-
-		const channel = supabase.channel("room1");
-		channel
-			.on("presence", { event: "sync" }, () => {
-				const userIds = [];
-				for (const id in channel.presenceState()) {
-					// @ts-ignore
-					userIds.push(channel.presenceState()[id][0].user_id);
-				}
-			})
-			.subscribe(async (status) => {
-				if (status === "SUBSCRIBED") {
-					await channel.track({
-						online_at: new Date().toISOString(),
-					});
-				}
-			});
+	;
   return (
     <html lang="en">
       <body className={space_Grotesk.className}>
