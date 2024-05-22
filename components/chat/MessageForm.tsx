@@ -20,14 +20,10 @@ import { promise, z } from "zod";
 import { Form, FormField } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "../ui/textarea";
 import { Label } from "@radix-ui/react-label";
 import { postImage } from "@/lib/apis";
 import { useMessagesTable, useSessionUser } from "@/lib/hooks";
-import { User } from "@supabase/supabase-js";
-import { Chat } from "@/db/modules/chat";
-import { ChatData, ChatMessage, MessageData, MessageInsert, UserAuthData, UsersAuthSelect } from '@/types';
-import { AddData } from "../users/UserProfileForm";
+import { ChatData, MessageInsert, UsersAuthSelect } from '@/types';
 import { insertMessage } from "@/server/chat";
 import { MessageInsertSchema } from "@/db/forms/formsSchema";
 
@@ -53,11 +49,9 @@ export default function MessageForm({ sender, chat }: Props) {
   supabaseBrowser()
     .auth.getUser()
     .then((user) =>
-      useSessionUser.setState({ currentUser: user.data.user || undefined })
+      useSessionUser.setState({ currentUser: user?.data?.user || undefined })
     );
 
-  const addMessage = useMessagesTable((state) => state.addRow);
-  //   const setOptimisticIds = useMessagesTable((state) => state.setOptimisticIds);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target?.files?.item(0);
@@ -78,10 +72,14 @@ export default function MessageForm({ sender, chat }: Props) {
       const files = await Promise.all(
         images.map((image) => postImage({ file: image }))
       );
+      if (!user ) {
+        toast.error("User not found!!");
+        return
+      }
       const newMessage = {
         text,
         chat: parseInt(params!),
-        sender: user?.id!,
+        sender: user.id,
         createdAt: new Date(),
         files: files,
         metadata: { sender: user},
@@ -92,10 +90,9 @@ export default function MessageForm({ sender, chat }: Props) {
         toast.error(error.message);
         return;
       }
-      if (data) {
-          
-        
-      }
+        form.reset()
+        setImageData([])
+        setImages([])
     } else {
       if (!user?.id) {
         toast.error("User not found!!");

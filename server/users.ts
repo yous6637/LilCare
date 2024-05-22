@@ -29,7 +29,6 @@ import {
   UsersAuthSelect,
 } from "@/types";
 import { db } from "@/db";
-import { supaServerObj } from '@/lib/supabase';
 
 export async function createPreRegistration(params: PreregestrationInsert) {
   const pregister = await db
@@ -44,7 +43,7 @@ export const createUser = async (params: CreateUserParams) => {
   const { firstName, lastName, phone } = params;
   const { email, password } = params;
 
-  const supabase = await supaServerObj;
+  const supabase = await supabaseServer();
   const customer = await chargily.createCustomer({
     name: `${firstName} ${lastName}`,
     email,
@@ -281,7 +280,7 @@ export const updateUser = async (
 ) => {
   const { firstName, lastName, phone, email, password, id :userId } = params;
 
-  const supabase = await supaServerObj;
+  const supabase = await supabaseServer();
   console.log(params);
   
   const user = await supabase.auth.updateUser(
@@ -360,7 +359,7 @@ export const getUsers = async (params?: Concrete<UserAuthData>) : Promise<UserAu
 };
 
 export async function logoutServer() {
-  const supabase = await supaServerObj;  
+  const supabase = await supabaseServer();
   const log = await supabase.auth.signOut();
   return log
 }

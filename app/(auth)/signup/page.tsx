@@ -1,5 +1,4 @@
 import PreRegistration from '@/components/PreRegistration'
-import { supaServerObj } from '@/lib/supabase';
 import { supabaseServer } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import React from 'react'
@@ -8,7 +7,7 @@ type Props = {}
 
 const Page = async (props: Props) => {
 
-  const supabase = await supaServerObj;          
+  const supabase = await supabaseServer();
 
   
   const currentUser =  (await supabase.auth.getSession()).data.session?.user

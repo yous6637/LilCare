@@ -85,7 +85,7 @@ export function EditAlert() {
 
 	const handleEdit = async () => {
 		const text = inputRef.current.value.trim();
-		if (text) {
+		if (text && actionMessage) {
 			optimisticUpdateMessage?.(actionMessage!, (prev, updateMessage) => (prev.filter((message) => {
 				if (message.id === updateMessage.id) {
 				  (message.text = updateMessage.text),
@@ -93,7 +93,7 @@ export function EditAlert() {
 				}
 				return message;
 			  })));
-			const { error } = await updateMessage({...actionMessage!, text: text})
+			const { error } = await updateMessage({...actionMessage, text: text})
 			if (error) {
 				toast.error(error.message);
 			} else {

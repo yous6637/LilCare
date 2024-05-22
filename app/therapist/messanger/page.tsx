@@ -14,14 +14,13 @@ import { Chat, ChatMembers } from "@/db/schema";
 import { get } from "http";
 import { UserToUserAuthSelect } from "@/lib/utils";
 import ChatAbout from "@/components/chat/ChatAbout";
-import { supaServerObj } from "@/lib/supabase";
 
 type Props = {
   searchParams: Record<string, string>;
 };
 
 export default async function Page(props: Props) {
-  const supabase = await supaServerObj;          
+  const supabase = await supabaseServer();
   const { data } = await supabase.auth.getUser();
 
   const currentUser = data?.user;

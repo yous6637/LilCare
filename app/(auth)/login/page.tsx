@@ -2,14 +2,13 @@ import LoginForm from '@/components/LoginForm'
 import { supabaseServer } from '@/lib/supabase/server'
 import { redirect } from "next/navigation";
 import { headers } from 'next/headers'
-import { supaServerObj } from '@/lib/supabase';
 
 type Props = {}
 
 const Page = async (props: Props) => {
 
 
-  const supabase = await supaServerObj;          
+  const supabase = await supabaseServer();
   const currentUser = (await supabase.auth.getUser()).data?.user;
 
   const headersList = headers();

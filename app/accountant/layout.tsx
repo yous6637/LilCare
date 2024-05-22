@@ -4,7 +4,6 @@ import { supabaseServer } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import React from "react";
 import { headers } from "next/headers";
-import { supaServerObj } from "@/lib/supabase";
 
 
 export async function generateMetadata({
@@ -12,7 +11,7 @@ export async function generateMetadata({
 }: {
   params: Record<string, string>;
 }) {
-  const supabase = await supaServerObj;          
+  const supabase = await supabaseServer();
   const currentUser = (await supabase.auth.getUser()).data?.user;
   return {
     title: `Accountant ${currentUser?.user_metadata.firstName} - ${currentUser?.user_metadata?.lastName}`,

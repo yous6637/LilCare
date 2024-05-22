@@ -2,8 +2,7 @@ import Sidebar from "@/components/Sidebar";
 import { supabaseServer } from "@/lib/supabase/server";
 import React from "react";
 import UserForm from "@/components/forms/UserForm";
-import { UserToUserAuthSelect } from "../../lib/utils";
-import { supaServerObj } from "@/lib/supabase";
+import { UserToUserAuthSelect } from "@/lib/utils";
 
 type Props = {};
 

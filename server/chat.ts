@@ -102,11 +102,11 @@ export const deleteMessage = async (messageId: string) => {
   }
 };
 
-export const updateMessage = async (message: ChatMessage) => {
+export const updateMessage = async (message: MessageData) => {
   try {
     const res = await db
       .update(messages)
-      .set({...message, chat: message.chat.id, sender: message.sender.id})
+      .set({...message})
       .where(eq(messages.id, message.id ))
       .returning(getTableColumns(messages));
     return { data: res, error: null };

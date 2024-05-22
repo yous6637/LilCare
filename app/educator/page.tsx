@@ -6,12 +6,11 @@ import UserForm from "@/components/forms/UserForm";
 import { redirect } from "next/navigation";
 import { UserToUserAuthSelect } from "@/lib/utils";
 import { getJobs, getSections } from "@/server/sections";
-import { supaServerObj } from "@/lib/supabase";
 
 type Props = {};
 
 export default async function Page({}: Props) {
-  const supabase = await supaServerObj;          
+  const supabase = await supabaseServer();
 
   const currentUser = (await supabase.auth.getUser()).data?.user;
 

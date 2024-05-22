@@ -6,7 +6,6 @@ import React from "react";
 import { headers } from "next/headers";
 import { title } from "process";
 import InitUser from "@/lib/store/InitUser";
-import { supaServerObj } from "@/lib/supabase";
 
 
 
@@ -31,23 +30,23 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const supabase = await supaServerObj;          
+  const supabase = await supabaseServer();
   const currentUser = (await supabase.auth.getSession()).data?.session?.user;
 
 
   const headersList = headers();
   const fullUrl = headersList.get("path");
 
-  // if (!currentUser) {
-  //   if (fullUrl) {
-  //      redirect("/login?path=" + fullUrl);
-  //   }
-  //    redirect("/login");
-  // }
+  if (!currentUser) {
+    if (fullUrl) {
+       redirect("/login?path=" + fullUrl);
+    }
+     redirect("/login");
+  }
 
-  // if (currentUser?.user_metadata.role !== "ADMIN") {
-  //    redirect(currentUser?.user_metadata.role.toLowerCase());
-  // }
+  if (currentUser?.user_metadata.role !== "ADMIN") {
+     redirect(currentUser?.user_metadata?.role?.toLowerCase());
+  }
 
   return (
     <div className="flex flex-1 flex-col h-screen overflow-hidden">
