@@ -1,9 +1,7 @@
 import Sidebar from "@/components/Sidebar";
 import { supabaseServer } from "@/lib/supabase/server";
 import React from "react";
-import UserDetails from "@/components/users/UserDetails";
 import UserForm from "@/components/forms/UserForm";
-import { redirect } from "next/navigation";
 import { UserToUserAuthSelect } from "@/lib/utils";
 
 type Props = {};

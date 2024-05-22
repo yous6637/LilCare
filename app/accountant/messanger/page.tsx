@@ -2,7 +2,6 @@ import React from "react";
 import ChatHeader from "@/components/chat/ChatHeader";
 import { supabaseServer } from "@/lib/supabase/server";
 import InitUser from "@/lib/store/InitUser";
-import { eq } from "drizzle-orm";
 import ChatList from "@/components/chat/ChatList";
 import MessageList from "@/components/chat/MessageList";
 import { redirect } from "next/navigation";
@@ -10,8 +9,6 @@ import { getChatMembers, getChats, getMessages } from "@/server/chat";
 import Sidebar from "@/components/Sidebar";
 import { Badge } from "@/components/ui/badge";
 import MessageForm from "@/components/chat/MessageForm";
-import { Chat, ChatMembers } from "@/db/schema";
-import { get } from "http";
 import { UserToUserAuthSelect } from "@/lib/utils";
 import ChatAbout from "@/components/chat/ChatAbout";
 
