@@ -14,18 +14,13 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
+
   CardFooter,
-  CardHeader,
-  CardTitle,
+
 } from "@/components/ui/card";
-import { parse } from "path";
 import { Children, InvoiceData, UsersAuthSelect } from "@/types";
 
 type Props = TableState<InvoiceData | UsersAuthSelect | Children | any>;
@@ -41,7 +36,6 @@ const CustomeTableFooter = (props: Props) => {
     rows,
     deselectAll,
     deselectRow,
-    listenData,
     getNextPage,
     getPreviousPage,
     getSelectedRows,
@@ -87,9 +81,9 @@ const CustomeTableFooter = (props: Props) => {
           {Array.from({ length: pageCount >= 3 ? 3 : pageCount }, (_, index) => {
             return currentPage <= 2 ? index + 1 : currentPage + index;
           }).map((num, i) => (
-            <PaginationItem>
+            <PaginationItem key={i}>
               <PaginationLink
-                key={i}
+
                 isActive={currentPage === num}
                 onClick={() => setPageIndex(num - 1)}
               >
