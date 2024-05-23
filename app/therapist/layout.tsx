@@ -5,13 +5,13 @@ import { redirect } from "next/navigation";
 import React from "react";
 import { headers } from "next/headers";
 
-const supabase = supabaseServer();
 
 export async function generateMetadata({
   params,
 }: {
   params: Record<string, string>;
 }) {
+  const supabase = supabaseServer()
   const currentUser = (await (await supabase).auth.getUser()).data?.user
 
   return {
@@ -24,7 +24,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentUser =  (await (await supabase).auth.getUser()).data?.user
+  const supabase = supabaseServer()
+
+  const currentUser = (await supabase.auth.getUser()).data?.user
 
 
   const headersList = headers();
