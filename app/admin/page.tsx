@@ -52,12 +52,7 @@ type Props = {};
 
 const Page = (props: Props) => {
   const { data } = useApi(getBalanceDetails, []);
-  const [childrenCircle, setChildrenCircle] = useState<{
-    labels?: string[];
-    data?: number[];
-    backgroundColor?: string[];
-  }>({labels: ["Girls", "Boys"], data: [1, 1], backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"]});
-  
+
   const childrenState = useApi(getChildren, []);
   const educatorsState = useApi(getEducators, []);
 
@@ -155,7 +150,6 @@ const Page = (props: Props) => {
           </div>
           
           <div className="grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-3">
-            <CardBarChart  content ={childrenCircle} />
             <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
               <CardHeader className="flex flex-row items-center">
                 <div className="grid gap-2">
