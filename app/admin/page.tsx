@@ -160,31 +160,30 @@ const Page = (props: Props) => {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Customer</TableHead>
-                    <TableHead className=" xl:table-column">
+                    <TableHead className=" sm:table-cell">
                       Type
                     </TableHead>
-                    <TableHead className=" xl:table-column">
+                    <TableHead className=" sm:table-cell">
                       Status
                     </TableHead>
-                    <TableHead className=" xl:table-column">
+                    <TableHead className=" sm:table-cell">
                       Date
                     </TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
+                    <TableHead className=" sm:table-cell">Amount</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   { data?.transactions.data?.map(transaction => (
                       <TableRow key={transaction.id}>
-                    <TableCell>
+                        <TableCell className=" sm:table-cell">
 
                       <div className=" text-sm text-muted-foreground md:inline">
                         {transaction?.metadata?.cusomter}
                       </div>
                     </TableCell>
-                    <TableCell className=" xl:table-column">
-                      Subscription
+                        <TableCell className=" sm:table-cell">
                     </TableCell>
-                        <TableCell className=" sm:table-column">
+                        <TableCell className=" sm:table-cell">
                       <Badge className="text-xs" variant={transaction.status == "paid" ? "success" : "destructive"}>
                         {transaction.status}
                       </Badge>

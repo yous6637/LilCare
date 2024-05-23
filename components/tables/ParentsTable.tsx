@@ -1,7 +1,7 @@
 "use client";
 import {  ParentData, UserAuthData, UsersAuthSelect } from "@/types";
 import {ApiState, useParentsTable, useUserTable} from "@/lib/hooks";
-import { MoreHorizontal } from "lucide-react";
+import {MoreHorizontal, Plus} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -55,7 +55,6 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
 
   const {
     currentPage,
-    selectedRows,
     itemsPerPage,
     selectAll,
     rows,
@@ -92,7 +91,18 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
-        <CardTitle>{title || "Parents"}</CardTitle>
+          <div className="flex justify-between">
+              <CardTitle>{title || "Parents"}</CardTitle>
+              {title ! == "Parents" && <Link
+                  href={"/admin/" + title == "Admins" ? "addAdmin" : "Educators" ? "addeducator" : "Therapists" ? "addtherapist" : "Accountants" ? "addacountant" : "addpsychologist"}
+                  className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
+              >
+                  <Plus width={20} height={20} className="mr-2"/>
+                  New
+              </Link>}
+          </div>
+
+
         <CardDescription>
           Manage your products and view their sales performance.
         </CardDescription>

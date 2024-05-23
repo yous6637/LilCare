@@ -1,18 +1,9 @@
 "use client";
-import { GoogleMapsEmbed } from '@next/third-parties/google'
-
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useState} from "react";
+import {GoogleMap, LoadScript, Marker} from "@react-google-maps/api";
 import { ChildLocationData } from "@/types";
 import { supabaseBrowser } from "@/lib/supabase/browser";
-
-import {
-  AuthenticationType,
-  data,
-  HtmlMarkerOptions,
-  Map,
-  HtmlMarker,
-} from "azure-maps-control";
-import {AZURE_MAP_KEY, GOOGLE_MAP_KEY} from "@/lib/constant";
+import {GOOGLE_MAP_KEY} from "@/lib/constant";
 
 type Props = {
   location: {
@@ -31,53 +22,44 @@ type Props = {
 const MapLocation = ({ location }: Props) => {
   const [coord, setCoord] = useState<ChildLocationData>(location);
 
-  const [mapState, setMap] = useState<Map | null>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const supabase = supabaseBrowser();
-    let map = {
-      authOptions: {
-        authType: AuthenticationType.subscriptionKey,
-        subscriptionKey: AZURE_MAP_KEY,
-      },
-      center: [
-        parseFloat(coord?.latitude || "6.6"),
-        parseFloat(coord?.longitude || "35.35"),
-      ],
-      "view": "Auto",
-      "style": "grayscale_dark",
-      zoom: 10,
-    };
 
     const geolocalization = supabase
-      .channel("geolocalization")
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "child_geolocation" },
-        (payload) => {
-          setCoord(payload.new as ChildLocationData);
-        }
-      )
-      .subscribe();
+        .channel("geolocalization")
+        .on(
+            "postgres_changes",
+            {event: "UPDATE", schema: "public", table: "child_geolocation"},
+            (payload) => {
+                setCoord(payload.new as ChildLocationData);
+            }
+        )
+        .subscribe();
 
     return () => {
       geolocalization.unsubscribe();
-      if (map) {
-      }
     };
-  }, [coord]);
+  }, []);
 
   return (
-      <GoogleMapsEmbed
-          apiKey={GOOGLE_MAP_KEY}
-          height={200}
-          width="100%"
-          mode="place"
-          q="Brooklyn+Bridge,New+York,NY"
-      />
+      <LoadScript googleMapsApiKey={GOOGLE_MAP_KEY}>
+          <GoogleMap
+              mapContainerStyle={{height: "200px", width: "100%"}}
+              center={{
+                  lat: parseFloat(coord?.latitude || "0"),
+                  lng: parseFloat(coord?.longitude || "0"),
+              }}
+              zoom={10}
+          >
+              <Marker
+                  position={{
+                      lat: parseFloat(coord?.latitude || "0"),
+                      lng: parseFloat(coord?.longitude || "0"),
+                  }}
+              />
+          </GoogleMap>
+      </LoadScript>
   );
 };
 
 export default MapLocation;
-
