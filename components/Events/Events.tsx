@@ -2,7 +2,7 @@
 import { useSessionUser } from "@/lib/hooks";
 import { EventData } from "@/types";
 import React from "react";
-import { SubscripeInService } from "../../server/payment";
+import { SubscripeInService } from "@/server/payment";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";

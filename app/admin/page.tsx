@@ -55,7 +55,7 @@ import CardBarChart from "@/components/charts/CardBarChart";
 
 type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   const { data } = useApi(getBalanceDetails, []);
   const [childrenCircle, setChildrenCircle] = useState<{
     labels?: string[];
@@ -269,4 +269,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Page;
