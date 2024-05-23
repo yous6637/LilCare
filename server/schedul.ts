@@ -22,40 +22,40 @@ interface ServerResponse<T> {
     error: null;
 }
 
-export const createSchedule = async (schedule : z.infer<typeof  ScheduleFormSchema>) => {
-
-    try {
-        switch (schedule.type) {
-            case "education" :
-                const education = schedule.education!
-                const {title: t, description: d, start: s, end: e} = education
-
-                const edu = (await db.insert(schedules).values({title: t, description: d, start: s, end: e, type: "education"}).returning(getTableColumns(schedules))).at(0);
-                if (!edu) return {data: null, error: "schedule has not been created"}
-                const {moduleId, sectionId} = education
-                const res = await db.insert(educationalSchedule).values({scheduleId: edu.id, moduleId, sectionId, metadata: education}).returning(getTableColumns((educationalSchedule)))
-                return {data: edu, error: null}
-                break
-
-            case "nutrition" :
-                const nutrition = schedule.nutrition!
-                const {title, description, content, start, end} = nutrition
-                const nut = (await db.insert(schedules).values({title, description,content, start, end, type: "nutrition"}).returning(getTableColumns(schedules))).at(0);
-                if (!nut) return {data: null, error: "schedule has not been created"}
-                const resNut = await createNutrition({scheduleId: nut.id, title, description, content})
-
-                return resNut
-            default:
-                return { data: null, error: "Invalid schedule type"};
-
-        }
-    }   catch (e) {
-         const err = e as Error
-         return { data: null, error: err.message}
-    }
-
-
-}
+// export const createSchedule = async (schedule : z.infer<typeof  ScheduleFormSchema>) => {
+//
+//     try {
+//         switch (schedule.type) {
+//             case "education" :
+//                 const education = schedule.education!
+//                 const {title: t, description: d, start: s, end: e} = education
+//
+//                 const edu = (await db.insert(schedules).values({title: t, description: d, start: s, end: e, type: "education"}).returning(getTableColumns(schedules))).at(0);
+//                 if (!edu) return {data: null, error: "schedule has not been created"}
+//                 const {moduleId, sectionId} = education
+//                 const res = await db.insert(educationalSchedule).values({scheduleId: edu.id, moduleId, sectionId, metadata: education}).returning(getTableColumns((educationalSchedule)))
+//                 return {data: edu, error: null}
+//                 break
+//
+//             case "nutrition" :
+//                 const nutrition = schedule.nutrition!
+//                 const {title, description, content, start, end} = nutrition
+//                 const nut = (await db.insert(schedules).values({title, description,content, start, end, type: "nutrition"}).returning(getTableColumns(schedules))).at(0);
+//                 if (!nut) return {data: null, error: "schedule has not been created"}
+//                 const resNut = await createNutrition({scheduleId: nut.id, title, description, content})
+//
+//                 return resNut
+//             default:
+//                 return { data: null, error: "Invalid schedule type"};
+//
+//         }
+//     }   catch (e) {
+//          const err = e as Error
+//          return { data: null, error: err.message}
+//     }
+//
+//
+// }
 
 
 // export const createSectionSchedule = async (schedule : ScheduleParams) => {

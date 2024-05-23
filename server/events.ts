@@ -19,42 +19,42 @@ export async function getEvents(
   return newEvents;
 }
 
-export async function createEvent(params: z.infer<typeof EventsInsertSchema>) {
-  try {
-    // create service
-    const  { data, error } = await createService(params.service);
-    const serviceId = data?.service?.id;
-    const prices = data?.prices;
-
-    if (!serviceId || !prices) return {data: null, error : "Service not created"};
-
-    // create schedule
-
-    const createdSchedule = await db
-      .insert(schedules)
-      .values(params.schedule)
-      .returning(getTableColumns(schedules));
-    const scheduleId = createdSchedule.at(0)?.id;
-    // create event
-    if (!scheduleId) return { data : null, error : "Schedule not created"};
-
-    const { start , end } = createdSchedule?.at(0)!
-    const event : EventInsert = {
-      serviceId,
-      title: params.title,
-      photo: params.photo,
-      description: params.description,
-      scheduleId: scheduleId, // Add the scheduleId property
-      metadata: { prices, schedule: { start, end}}
-    }
-    const response = await db
-      .insert(events)
-      .values(event)
-      .returning(getTableColumns(events));
-
-    return { data: response, error: null };
-  } catch (error) {
-    const err = error as Error;
-    return { data: null, error: err.message };
-  }
-}
+// export async function createEvent(params: z.infer<typeof EventsInsertSchema>) {
+//   try {
+//     // create service
+//     const  { data, error } = await createService(params.service);
+//     const serviceId = data?.service?.id;
+//     const prices = data?.prices;
+//
+//     if (!serviceId || !prices) return {data: null, error : "Service not created"};
+//
+//     // create schedule
+//
+//     const createdSchedule = await db
+//       .insert(schedules)
+//       .values(params.schedule)
+//       .returning(getTableColumns(schedules));
+//     const scheduleId = createdSchedule.at(0)?.id;
+//     // create event
+//     if (!scheduleId) return { data : null, error : "Schedule not created"};
+//
+//     const { start , end } = createdSchedule?.at(0)!
+//     const event : EventInsert = {
+//       serviceId,
+//       title: params.title,
+//       photo: params.photo,
+//       description: params.description,
+//       scheduleId: scheduleId, // Add the scheduleId property
+//       metadata: { prices, schedule: { start, end}}
+//     }
+//     const response = await db
+//       .insert(events)
+//       .values(event)
+//       .returning(getTableColumns(events));
+//
+//     return { data: response, error: null };
+//   } catch (error) {
+//     const err = error as Error;
+//     return { data: null, error: err.message };
+//   }
+// }

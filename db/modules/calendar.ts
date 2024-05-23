@@ -53,7 +53,7 @@ export const events = pgTable("events", {
   description: text("description").notNull(),
   photo: text("photo").notNull().$default(() => ""),
   serviceId: text("service_id").references(() => services.id),  // Consistent naming
-  metadata: customJsonb<{ prices: PriceData[], schedule : {start : string, end: string} }>("metadata"),
+  metadata: customJsonb<{ prices: PriceData[], schedule: { start: Date, end: Date } }>("metadata"),
   scheduleId: serial("schedule_id").references(() => schedules.id).notNull(),
 });
 

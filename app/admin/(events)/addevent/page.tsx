@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import { createEvent } from "@/server/events";
 import { toast } from "sonner";
 
 type Props = {};
