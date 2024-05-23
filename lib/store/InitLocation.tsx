@@ -18,7 +18,7 @@ export default function InitLocation({ section }: { section: number }) {
     
     
     ;
-  }, []);
+  }, [section]);
 
   return <></>;
 }

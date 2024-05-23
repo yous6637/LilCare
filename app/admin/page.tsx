@@ -174,7 +174,7 @@ const Page = (props: Props) => {
                 </TableHeader>
                 <TableBody>
                   { data?.transactions.data?.map(transaction => (
-                    <TableRow>
+                      <TableRow key={transaction.id}>
                     <TableCell>
                       {/* <div className="font-medium">{
                       transaction.metadata ? transaction?.metadata?.at(1)?.customer?.email : "NULL"}</div>
