@@ -31,7 +31,6 @@ import {
     UserAuthData,
     UsersAuthSelect,
 } from "@/types";
-import { UserToUserAuthSelect } from "./utils";
 
 export type ApiState<T> = {
   data?: T;
@@ -40,19 +39,7 @@ export type ApiState<T> = {
   setData: Dispatch<SetStateAction<T | undefined>>;
 };
 
-interface NotificationState {
-  hasMore: boolean;
-  page: number;
-  notifications: NotificationData[];
-  actionNotification: NotificationData | undefined;
-  optimisticIds: string[];
-  addNotification: (notification: NotificationData) => void;
-  setActionNotification: (notification: NotificationData | undefined) => void;
-  optimisticDeleteNotification?: (notificationId: number) => void;
-  optimisticUpdateNotification?: (notification: NotificationData) => void;
-  setOptimisticIds?: (id: string) => void;
-  setNotifications?: (notifications: NotificationData[]) => void;
-}
+
 
 export const useApi = <T>(
   callback: () => Promise<T | undefined>,

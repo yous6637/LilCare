@@ -3,7 +3,6 @@ import { useSessionUser } from "@/lib/hooks";
 import { EventData } from "@/types";
 import React from "react";
 import { SubscripeInService } from "../../server/payment";
-import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
