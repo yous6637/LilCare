@@ -21,7 +21,7 @@ import { format } from "date-fns";
 import ScheduleForm from "@/components/forms/calendar/ScheduleForm";
 import {ModuleData, ScheduleData, SectionData} from "@/types";
 import {createEducationalSchedule} from "@/server/cirriculiam";
-import {createSchedule, getSchedules, getSectionSchedules} from "@/server/schedul";
+import {getSchedules, getSectionSchedules} from "@/server/schedul";
 
 type Props = {
     modules: ModuleData[]
@@ -200,33 +200,8 @@ export default function Calendar({ section, modules}: Props) {
                         <ScheduleForm
                             schedule={{start : selectedEvent.start, end: selectedEvent.end}}
                             onSubmit={async (data) => {
-                                const { type, event ,education, nutrition  } = data
-                                if (education && type === "education") {
-                                    const res = (await createSchedule({
-                                        type : "education",
-                                        education
-                                    })).data;
-                                        if (!res) {
-                                            console.log(res)
-                                        toast.error("An error occured");
-                                        return;
-                                    }
-                                    setAllEvents([...allEvents, {id: res.id, title: "Education", start: format (res.start, "yyyy-MM-dd HH:mm:ss"), end: format (res.end, "yyyy-MM-dd HH:mm:ss")}]);
 
 
-                                }
-                                if (nutrition && type === "nutrition") {
-                                    const res = await createSchedule({
-                                        type : "nutrition", nutrition
-                                    });
-                                        if (!res.data) {
-                                            console.log(res)
-
-                                            toast.error(res.error);
-                                        return;
-                                    }
-
-                                }
                                 toast.success("Schedule created successfully");
                                 setShowModal((prev) => !prev);
                             }}

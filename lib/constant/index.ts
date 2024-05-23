@@ -14,7 +14,7 @@ export const AZURE_ACCOUNT_NAME = "saasproject"
 export const AZURE_ACCOUNT_KEY = "gXVj8BJBpljBZzZSIrPKPW812Byh1k+ZLml6CSfY7HmxaZXJhPotoF2ZmpoItlCJRYRKaSFvW71x+AStDohJow=="
 
 export const AZURE_MAP_KEY = "70kjOhvsHo2jSRA1GGeRvZ8mo3tNzs4Hvr9hkPZi2gI"!
-export const GOOGLE_MAP_KEY = ""
+export const GOOGLE_MAP_KEY = "3523a327f3d22e24"
 
 
 

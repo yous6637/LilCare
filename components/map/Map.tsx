@@ -12,7 +12,7 @@ import {
   Map,
   HtmlMarker,
 } from "azure-maps-control";
-import {AZURE_MAP_KEY} from "@/lib/constant";
+import {AZURE_MAP_KEY, GOOGLE_MAP_KEY} from "@/lib/constant";
 
 type Props = {
   location: {
@@ -70,7 +70,7 @@ const MapLocation = ({ location }: Props) => {
 
   return (
       <GoogleMapsEmbed
-          apiKey="XYZ"
+          apiKey={GOOGLE_MAP_KEY}
           height={200}
           width="100%"
           mode="place"
