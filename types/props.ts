@@ -1,8 +1,6 @@
 // In this file I will define the types of the props that I will use in the components
 
-import { ChatInsert, ChildInsert, DiscountData, DiscountInsert, EducationalScheduleInsert, EventInsert, InvoiceInsert, JobInsert, MessageInsert, ModuleInsert, NotificationInsert, ScheduleInsert, SeasonInsert, SectionData, SectionInsert, ServiceData, ServiceInsert, TaxData, TaxInsert, UserAuthData, UserAuthInsert } from "./";
-import { taxes } from '../db/modules/payment';
-import { parents } from '../db/modules/users';
+import { ChatInsert, ChildInsert, DiscountData, DiscountInsert, EducationalScheduleInsert, EventInsert, InvoiceInsert, JobInsert, MessageInsert, ModuleInsert, NotificationInsert, ScheduleInsert, SeasonInsert, SectionData, SectionInsert, ServiceData, ServiceInsert, UserAuthData, UserAuthInsert } from "./";
 
 
 
@@ -33,15 +31,11 @@ export type ServiceFormProps = {
     onCancel: () => void
 }
 
-export type TaxFormProps = {
-    onSubmit: (data: TaxInsert) => void
-    onCancel: () => void
-}
+
 
 export type InvoiceFormProps = {
     onSubmit: (data: InvoiceInsert) => void
     onCancel: () => void
-    taxes: TaxData[],
     services: ServiceData[],
     discounts: DiscountData[],
     receipents: UserAuthData[]

@@ -34,13 +34,13 @@ export const createSchedule = async (schedule : z.infer<typeof  ScheduleFormSche
                 if (!edu) return {data: null, error: "schedule has not been created"}
                 const {moduleId, sectionId} = education
                 const res = await db.insert(educationalSchedule).values({scheduleId: edu.id, moduleId, sectionId, metadata: education}).returning(getTableColumns((educationalSchedule)))
-                return {data: res, error: null}
+                return {data: edu, error: null}
                 break
 
             case "nutrition" :
                 const nutrition = schedule.nutrition!
                 const {title, description, content, start, end} = nutrition
-                const nut = (await db.insert(schedules).values({title, description, start, end, type: "nutrition"}).returning(getTableColumns(schedules))).at(0);
+                const nut = (await db.insert(schedules).values({title, description,content, start, end, type: "nutrition"}).returning(getTableColumns(schedules))).at(0);
                 if (!nut) return {data: null, error: "schedule has not been created"}
                 const resNut = await createNutrition({scheduleId: nut.id, title, description, content})
 

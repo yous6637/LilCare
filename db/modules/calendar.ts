@@ -2,6 +2,7 @@ import { customType, date, timestamp } from "drizzle-orm/pg-core";
 import { pgTable, serial, varchar, text } from "drizzle-orm/pg-core";
 import { modules, sections, services } from ".";
 import { PriceData } from "@/types";
+import {datetime} from "drizzle-orm/mysql-core";
 
 const customJsonb = <TData>(name: string) =>
   customType<{ data: TData; driverData: string }>({
@@ -19,8 +20,8 @@ const customJsonb = <TData>(name: string) =>
   export const schedules = pgTable("schedules", {
     id: serial("id").primaryKey().unique().notNull(),
     title: varchar("title", { length: 100 }).notNull(),
-    start: date("start").notNull(),
-    end: date("end").notNull(),
+    start: timestamp("start").notNull(),
+    end: timestamp("end").notNull(),
     description: text("description").notNull(),
     type: varchar("type", { length: 100, enum: ["education", "nutrition", "event"] }).notNull(),
     // Optional: add created_at and updated_at timestamps

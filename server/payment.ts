@@ -35,6 +35,9 @@ import { eq, getTableColumns } from "drizzle-orm";
 import { CreatePriceParams } from "@/vendor/chargily/src/types/param";
 import { chargily } from "./chargily";
 import { toSql } from "@/lib/utils";
+import axios from "axios";
+import { CHARGILIY_SK } from "@/lib/constant";
+import { Balance, Checkout } from "@/vendor/chargily/lib/types/data";
 
 
 export const createService = async (params: z.infer<typeof ServiceInsertSchema>
@@ -458,3 +461,30 @@ export const getCustomers = async (params?: Concrete<CustomerData>) => {
   const results = await db.select().from(customers).where(query);
   return results;
 }
+
+
+
+
+
+
+export const getBalanceDetails = async () => {
+  const balance = (
+    await axios.get("https://pay.chargily.net/test/api/v2/balance", {
+      headers: {
+        Authorization:
+          `Bearer ${CHARGILIY_SK}`,
+      },
+    })
+  ).data as Balance;
+  const transactions = (
+    await axios.get("https://pay.chargily.net/test/api/v2/checkouts", {
+      headers: {
+        Authorization:
+        `Bearer ${CHARGILIY_SK}`,
+      },
+    })
+  ).data as { data: Checkout[] };
+
+  console.log(transactions);
+  return { balance, transactions };
+};

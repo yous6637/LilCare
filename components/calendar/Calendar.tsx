@@ -159,7 +159,7 @@ export default function Calendar({ section, modules}: Props) {
                     center: "title",
                     right: 'dayGridMonth,timeGridWeek,timeGridDay',
                 }}
-                events={[]}
+                events={ allEvents?.map((e) => ({id: `${e.id}`, title: e.title, start: e.start, end: e.end}))}
                 eventClassNames={"w-full"}
                 nowIndicator={true}
                 editable={true}
@@ -202,15 +202,17 @@ export default function Calendar({ section, modules}: Props) {
                             onSubmit={async (data) => {
                                 const { type, event ,education, nutrition  } = data
                                 if (education && type === "education") {
-                                    const res = await createSchedule({
+                                    const res = (await createSchedule({
                                         type : "education",
                                         education
-                                    });
-                                        if (!res.data) {
+                                    })).data;
+                                        if (!res) {
                                             console.log(res)
-                                        toast.error(res.error);
+                                        toast.error("An error occured");
                                         return;
                                     }
+                                    setAllEvents([...allEvents, {id: res.id, title: "Education", start: format (res.start, "yyyy-MM-dd HH:mm:ss"), end: format (res.end, "yyyy-MM-dd HH:mm:ss")}]);
+
 
                                 }
                                 if (nutrition && type === "nutrition") {
