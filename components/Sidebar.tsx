@@ -60,7 +60,7 @@ const Sidebar = ({ items, active }: Props) => {
 
   return size.width! > 400 ? (
       <div
-          className="px-0 py-3 overflow-auto min-w-[250px] md:px-4 w-12 md:w-64 hidden min-[400px]:flex flex-col bg-secondary h-full gap-2">
+          className="px-0 py-3 overflow-auto min-[400px]:min-w-[250px] md:px-4 w-12 md:w-64 hidden min-[400px]:flex flex-col bg-secondary h-full gap-2">
         {sidebarItems.map((item) => (
             <SidebarItem key={item.href} active={active} {...item} />
         ))}
