@@ -29,7 +29,7 @@ import {
   customers,
   price,
 } from "@/db/schema";
-import {Address} from "@/vendor/chargily";
+import {Address} from "@/vendor/types/data";
 
 // in this section we define the types of the tables
 
