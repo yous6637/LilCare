@@ -64,17 +64,7 @@ const Page = (props: Props) => {
     if (children !== undefined) {
       console.log(children)
 
-      const boys = children.filter(
-        (child) => child.gender === "Male"
-      ).length;
-      const girls = children.length - boys;
-  
-      setChildrenCircle({
-        labels: ["Girls", "Boys"],
-        data: [girls, boys],
-        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
-      });
-      console.log(childrenCircle)
+
     }
    
   }, [childrenState?.data]);
