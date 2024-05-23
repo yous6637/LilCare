@@ -79,9 +79,9 @@ export default function EventForm({onSubmit, onCancel}: FormProps) {
     const schedule : ScheduleInsert = {
       title: data.title,
       description: data.description,
-      type: "event", 
-      start: data.schedule.start,
-      end: data.schedule.end,
+      type: "event",
+        start: new Date(data.schedule.start),
+        end: new Date(data.schedule.end),
     };
     data.schedule = schedule;
 
