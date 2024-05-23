@@ -12,6 +12,7 @@ import {
 import { addMonths, addYears, format } from "date-fns"; // Assuming you're using date-fns for date manipulation
 
 import {
+  Checkout,
   Concrete,
   CustomerData, CustomerInsert,
   DiscountData,
@@ -37,7 +38,7 @@ import { chargily } from "./chargily";
 import { toSql } from "@/lib/utils";
 import axios from "axios";
 import { CHARGILIY_SK } from "@/lib/constant";
-import { Balance, Checkout } from "@/vendor/chargily/lib/types/data";
+import {Balance} from "@/vendor/types/data";
 
 
 export const createService = async (params: z.infer<typeof ServiceInsertSchema>
