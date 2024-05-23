@@ -10,8 +10,6 @@ import {
 import { clickOn } from "@/lib/helpers";
 import { toast } from "sonner";
 import { EventData } from "@/types";
-import EventForm from "../forms/EventForm";
-import { createEvent } from "@/server/events";
 import PreRegistrationAccept from "../forms/PreRegistrationAccept";
 import { acceptPreregistration } from "@/server/preregistrations";
 
