@@ -65,7 +65,7 @@ const Sidebar = ({ items, active }: Props) => {
     })
     console.log({sidebar : currentUser});
 
-  },[])
+  }, [currentUser])
 
 
   
