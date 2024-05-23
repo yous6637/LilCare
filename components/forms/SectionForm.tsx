@@ -38,7 +38,7 @@ type FormProps = {
 };
 
 export default function SectionsForm({ onSubmit }: FormProps) {
-    const [submitting, setIsSubminting] = useState(false)
+    const [submitting, setIsSubmitting] = useState(false)
   const [isUploading, setIsUploading] = useState(false);
   const [prices, setPrices] = useState<{type: string, amount: number}[]>([])
   const [image, setImage] = useState<File>();
@@ -47,6 +47,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
   });
 
   const checkSubmit = async (data: z.infer<typeof formSchema>) => {
+      setIsSubmitting(true)
     // Handle form Last Check before submission  logic here
     // e.g., send POST request to your API endpoint to add the parent to the database
     if (image) {
@@ -65,8 +66,11 @@ export default function SectionsForm({ onSubmit }: FormProps) {
         params.service.Images = [imageRes.url];
       console.log({params})
       onSubmit?.(params);
+        setIsSubmitting(false)
       return;
     }
+      setIsSubmitting(false)
+
   };
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Handle image called");
@@ -266,7 +270,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
             Cancel
           </Button>
           <Button variant={"primary"} type="submit">
-              {isSubmitting && <Loader2 className="animate-spin"/>} Submit
+              {submitting && <Loader2 className="animate-spin"/>} Submit
           </Button>
         </div>
       </form>
