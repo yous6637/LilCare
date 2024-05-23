@@ -81,7 +81,8 @@ function InvoiceForm({ services, discounts, customers }: Props) {
 
     // const res = await onSubmit?.(invoices);
     console.log(invoices);
-    
+    const {data: response, error} = await createInvoices(invoices);
+    toast.success("invoices has been send successfully")
     setIsSubmitting(false);
   };
 
@@ -98,7 +99,7 @@ function InvoiceForm({ services, discounts, customers }: Props) {
             <CardHeader className="flex-row justify-between items-center py-4">
               <CardTitle>Create Invoice</CardTitle>
               <Button type="submit" variant={"outline"}>
-                {isSubmitting && <Loader2 className="animate-spin" />} Send
+                {isSubmitting && <Loader2 className="animate-spin"/>} {"Send"}
               </Button>
             </CardHeader>
           </Card>

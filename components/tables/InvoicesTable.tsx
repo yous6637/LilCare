@@ -122,26 +122,27 @@ export default function InvoiceTable({
         >
           Export Table
         </Button>
-        <Button
-          disabled = {selectedRows.length ===0}
-          onClick={(e) => {
-            const items = selectedRows.map((row) => ({
-              price: row.price!,
-              quantity: 1,
-            }));
-            console.log(items);
-            const customerId = currentUser?.user_metadata.customerId as string;
-            createCheckout(selectedRows, window.location.host)
-              .then((checkout) => {
-                console.log({checkout});
-                router.replace(checkout.checkout_url);
-              })
-              .catch((error) => {});
-          }}
+        {currentUser?.user_metadata?.role == "PARENT" && <Button
+            disabled={selectedRows.length === 0}
+            onClick={(e) => {
+              const items = selectedRows.map((row) => ({
+                price: row.price!,
+                quantity: 1,
+              }));
+              console.log(items);
+              const customerId = currentUser?.user_metadata.customerId as string;
+              createCheckout(selectedRows, window.location.host)
+                  .then((checkout) => {
+                    console.log({checkout});
+                    router.replace(checkout.checkout_url);
+                  })
+                  .catch((error) => {
+                  });
+            }}
         >
           {" "}
           Pay{" "}
-        </Button>
+        </Button>}
       </div>
       <Card ref={targetRef} x-chunk="dashboard-06-chunk-0">
         <CardHeader>

@@ -1,6 +1,6 @@
 "use client";
 import {  ParentData, UserAuthData, UsersAuthSelect } from "@/types";
-import {ApiState, useParentsTable, useUserTable} from "@/lib/hooks";
+import {ApiState, useParentsTable} from "@/lib/hooks";
 import {MoreHorizontal, Plus} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,6 @@ import CustomTableFooter from "./CustomTableFooter";
 
 type Props = {
   apiState?: UsersAuthSelect[];
-  // columnsMaker: () => ColumnDef<Parent>[];
   onSelect?: (data: UsersAuthSelect<ParentData>[]) => void;
   title?: string;
 };
@@ -80,7 +79,7 @@ export default function ParentTable({ onSelect, apiState, title }: Props) {
     console.log(data);
     if (data) {
       console.log({pageCount : Math.floor(data?.length / itemsPerPage) + 1 })
-      useUserTable.setState({
+      useParentsTable.setState({
         data: apiState,
         rows: apiState?.slice(0, itemsPerPage),
         pageCount: Math.floor(data?.length / itemsPerPage) + 1,
