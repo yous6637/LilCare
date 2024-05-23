@@ -91,6 +91,7 @@ const Sidebar = ({ items, active }: Props) => {
   );
 };
 
+Sidebar.displayName = "Sidebar";
 export default Sidebar;
 
 function useWindowSize() {

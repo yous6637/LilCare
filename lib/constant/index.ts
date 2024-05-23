@@ -16,7 +16,8 @@ export const AZURE_ACCOUNT_KEY = "gXVj8BJBpljBZzZSIrPKPW812Byh1k+ZLml6CSfY7HmxaZ
 export const AZURE_MAP_KEY = "70kjOhvsHo2jSRA1GGeRvZ8mo3tNzs4Hvr9hkPZi2gI"!
 export const GOOGLE_MAP_KEY = "3523a327f3d22e24"
 
-
+export const APP_ID = "lQZPCnmPz8HZthQs9PLU"
+export const KEY = "qZL6IGVKYo5MmE_2CJFg0EeUb7gQsaccUhUcHDxg_PA"
 
 export const  PageTabs = {
     "payout" : { defaultTab : "services" ,tabs : ["services", "discounts", "invoices", "send invoice"] },
