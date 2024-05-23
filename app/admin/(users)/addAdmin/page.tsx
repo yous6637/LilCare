@@ -10,7 +10,7 @@ const Page = () => {
  
   return (
     <div className="flex h-full">
-      <Sidebar active="Parents"  />
+        <Sidebar active="Team"/>
       <div className="container overflow-auto">
         <UserForm role="ADMIN" />
       </div>

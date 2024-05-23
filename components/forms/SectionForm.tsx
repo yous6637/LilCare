@@ -38,6 +38,7 @@ type FormProps = {
 };
 
 export default function SectionsForm({ onSubmit }: FormProps) {
+    const [submitting, setIsSubminting] = useState(false)
   const [isUploading, setIsUploading] = useState(false);
   const [prices, setPrices] = useState<{type: string, amount: number}[]>([])
   const [image, setImage] = useState<File>();
@@ -265,7 +266,7 @@ export default function SectionsForm({ onSubmit }: FormProps) {
             Cancel
           </Button>
           <Button variant={"primary"} type="submit">
-            Submit
+              {isSubmitting && <Loader2 className="animate-spin"/>} Submit
           </Button>
         </div>
       </form>

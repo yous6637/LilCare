@@ -15,7 +15,7 @@ const Page = ({searchParams} : Props) => {
   const preregistration = id ? getPreregistrations({id: id}) : undefined;
   return (
     <div className="flex h-full">
-      <Sidebar active="Parents" />
+        <Sidebar active="Team"/>
       <div className="container overflow-auto">
         {
           preregistration ? (

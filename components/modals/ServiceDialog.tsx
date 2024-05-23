@@ -27,7 +27,7 @@ export default function ServiceDialog({}: Props) {
   return (
     <Dialog>
       <DialogTrigger id="service-trigger" asChild>
-        <Button variant="outline">Add discount</Button>
+          <Button variant="outline">Add Service</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -14,7 +14,7 @@ const Page = () => {
 
   return (
     <div className="flex h-full">
-      <Sidebar active="Parents" />
+        <Sidebar active="Team"/>
       <div className="container overflow-auto">
         <UserForm jobState={jobState?.data} sectionsState={sectionsState?.data} role="EDUCATOR" />
       </div>
