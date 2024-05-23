@@ -11,7 +11,7 @@ export async function generateMetadata({
 }: {
   params: Record<string, string>;
 }) {
-  const supabase = supabaseServer()
+  const supabase = await supabaseServer();
   const currentUser = (await (await supabase).auth.getUser()).data?.user
 
   return {
@@ -24,7 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = supabaseServer()
+  const supabase = await supabaseServer();
 
   const currentUser = (await supabase.auth.getUser()).data?.user
 
