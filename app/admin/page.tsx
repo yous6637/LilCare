@@ -176,16 +176,15 @@ const Page = (props: Props) => {
                   { data?.transactions.data?.map(transaction => (
                       <TableRow key={transaction.id}>
                     <TableCell>
-                      {/* <div className="font-medium">{
-                      transaction.metadata ? transaction?.metadata?.at(1)?.customer?.email : "NULL"}</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        {transaction.metadata ? transaction.metadata?.at(1)?.customer?.name : "NULL" }
-                      </div> */}
+
+                      <div className=" text-sm text-muted-foreground md:inline">
+                        {transaction?.metadata?.cusomter}
+                      </div>
                     </TableCell>
                     <TableCell className=" xl:table-column">
                       Subscription
                     </TableCell>
-                    <TableCell className=" xl:table-column">
+                        <TableCell className=" sm:table-column">
                       <Badge className="text-xs" variant={transaction.status == "paid" ? "success" : "destructive"}>
                         {transaction.status}
                       </Badge>
@@ -217,10 +216,10 @@ const Page = (props: Props) => {
                             Details
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={(e) => {
-                              // useInvoiceStore.setState({ ActionRow: invoice });
-                              // clickOn("invoice-trigger-edit");
-                            }}
+                              // onClick={(e) => {
+                              //   useInvoiceStore.setState({ ActionRow: invoice });
+                              //   clickOn("invoice-trigger-edit");
+                              // }}
                           >
                             Edit
                           </DropdownMenuItem>

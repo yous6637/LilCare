@@ -39,6 +39,8 @@ const SidebarItem = React.memo(({label, Icon, href, active}: SideBarItem & { act
   );
 });
 
+SidebarItem.displayName = "SidebarItem";
+
 const Sidebar = ({ items, active }: Props) => {
   const size = useWindowSize();
 
