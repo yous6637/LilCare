@@ -19,7 +19,9 @@ import { useApi } from "@/lib/hooks";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import ScheduleForm from "@/components/forms/calendar/ScheduleForm";
-import {ModuleData, SectionData} from "@/types";
+import {ModuleData, ScheduleData, SectionData} from "@/types";
+import {createEducationalSchedule} from "@/server/cirriculiam";
+import {createSchedule, getSchedules, getSectionSchedules} from "@/server/schedul";
 
 type Props = {
     modules: ModuleData[]
@@ -71,6 +73,12 @@ export default function Calendar({ section, modules}: Props) {
             });
         }
     }, []);
+
+
+    const schedules = useApi(async () => getSectionSchedules({sectionId: section.id}),[], {onSuccess : async (d) => {
+        const data = d as ScheduleData[]
+        setAllEvents([...allEvents, ...d])
+    }})
 
     function handleDateClick(arg: { date: Date; allDay: boolean }) {
         setNewEvent({
@@ -192,8 +200,32 @@ export default function Calendar({ section, modules}: Props) {
                         <ScheduleForm
                             schedule={{start : selectedEvent.start, end: selectedEvent.end}}
                             onSubmit={async (data) => {
-                                console.log(data)
-                                toast.success(<> Schedule created successfully</>);
+                                const { type, event ,education, nutrition  } = data
+                                if (education && type === "education") {
+                                    const res = await createSchedule({
+                                        type : "education",
+                                        education
+                                    });
+                                        if (!res.data) {
+                                            console.log(res)
+                                        toast.error(res.error);
+                                        return;
+                                    }
+
+                                }
+                                if (nutrition && type === "nutrition") {
+                                    const res = await createSchedule({
+                                        type : "nutrition", nutrition
+                                    });
+                                        if (!res.data) {
+                                            console.log(res)
+
+                                            toast.error(res.error);
+                                        return;
+                                    }
+
+                                }
+                                toast.success("Schedule created successfully");
                                 setShowModal((prev) => !prev);
                             }}
                             modules={modules}

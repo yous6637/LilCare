@@ -183,4 +183,4 @@ export const ScheduleFormSchema = z.object({
         end: z.string(),
         content: z.string().array(),
     }).optional()
-});
+})

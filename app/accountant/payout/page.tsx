@@ -4,21 +4,13 @@ import ServiceCard from "@/components/cards/ServiceCard";
 import InvoiceForm from "@/components/forms/payment/InvoiceForm";
 import { DiscountDialog } from "@/components/modals/DiscountDialog";
 import InvoiceTable from "@/components/tables/InvoicesTable";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { useApi, useSessionUser } from "@/lib/hooks";
 import {
-  createInvoices,
   getDiscounts,
   getInvoices,
   getServices,
 } from "@/server/payment";
 import { getParents } from "@/server/users";
-import { DiscountData, InvoiceData, ServiceData } from "@/types";
-import { Send } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { customers } from "../../../db/modules/payment";
 import { supabaseServer } from "@/lib/supabase/server";
 import Link from "next/link";
 
@@ -48,16 +40,16 @@ const Page = async ({ searchParams }: Props) => {
         <Tabs defaultValue={tab}>
           <TabsList className="bg-inherit">
             <TabsTrigger value="Services">
-              <Link className="p-2" href="/admin/payout?tab=services">Services</Link>
+              <Link className="p-2" href="/accountant/payout?tab=services">Services</Link>
             </TabsTrigger>
             <TabsTrigger value="Discounts">
-              <Link className="p-2" href="/admin/payout?tab=discounts">Discounts</Link>
+              <Link className="p-2" href="/accountant/payout?tab=discounts">Discounts</Link>
             </TabsTrigger>
             <TabsTrigger value="Invoices">
-              <Link className="p-2" href="/admin/payout?tab=invoices">Invoices</Link>
+              <Link className="p-2" href="/accountant/payout?tab=invoices">Invoices</Link>
             </TabsTrigger>
             <TabsTrigger value="Send Invoice">
-              <Link className="p-2" href="/admin/payout?tab=Send Invoice">Invoice Form</Link>
+              <Link className="p-2" href="/accountant/payout?tab=Send Invoice">Invoice Form</Link>
             </TabsTrigger>
           </TabsList>
           <TabsContent value="Services">
@@ -86,7 +78,7 @@ const Page = async ({ searchParams }: Props) => {
           <TabsContent value="Invoices">
             <InvoiceTable apiState={invoices} currentUser={currentUser!} />
           </TabsContent>
-          <TabsContent value="Send Invoice">
+          <TabsContent value="send invoice">
             <div className="p-4">
               <InvoiceForm
                 services={services}

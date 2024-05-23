@@ -40,7 +40,7 @@ const customJsonb = <TData>(name: string) =>
 
 export const nutritionSchedule = pgTable("nutrition", {
   id: serial("id").primaryKey().unique().notNull(),
-  title: varchar("title", { length: 100, enum: ["breakfast", "lunch"] }).notNull(),
+  title: varchar("title", { length: 100 }).notNull(),
   content: text("content").array().notNull(),
   description: text("description").notNull(),
   scheduleId: serial("scheduleId").references(() => schedules.id),

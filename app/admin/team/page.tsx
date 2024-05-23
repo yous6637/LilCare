@@ -18,7 +18,7 @@ type Props = {
 const Page = async ({ searchParams }: Props) => {
   const role = searchParams.role;
   if (!role || !PageTabs.team.tabs.includes(role) ){
-    redirect(`/${PageTabs.team.defaultTab}`)
+    redirect(`/admin/team?tab=${PageTabs.payout.defaultTab}`)
     return;
   }
 

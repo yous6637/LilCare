@@ -32,7 +32,7 @@ const ChildProfile = ({ child }: { child?: Children }) => {
 
   const tab = searchParams.get("tab") ;
   if (!tab || !PageTabs.child.tabs.includes(tab) ){
-    router.push(`/${PageTabs.child.defaultTab}`)
+    router.push(`${window.location.host}/${PageTabs.child.defaultTab}`)
     return;
   }
 

@@ -201,7 +201,7 @@ function InvoiceForm({ services, discounts, customers }: Props) {
                         <SelectContent>
                           {form
                             .watch("service")
-                            ?.metadata.prices.map((price) => (
+                            ?.metadata?.prices?.map((price) => (
                               <SelectItem key={price.id} value={price.id}>
                                 {price.price} dz / {price.type}
                               </SelectItem>

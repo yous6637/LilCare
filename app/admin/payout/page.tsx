@@ -29,15 +29,12 @@ const Page = async ({ searchParams }: Props) => {
   const tab = searchParams.tab;
 
   if (!tab || !PageTabs.payout.tabs.includes(tab) ){
-    redirect(`/${PageTabs.payout.defaultTab}`)
+    redirect(`/admin/payout?tab=${PageTabs.payout.defaultTab}`)
     return;
   }
 
-  const services = tab == "services" ? await getServices() : [];
-  const discounts = tab == "discounts" ? await getDiscounts() : [];
-  const invoices = tab == "invoices" ? await getInvoices() : [];
-  const customers = await getParents();
-  // const [services, invoices, discounts, customers] = await Promise.all([getServices(), getInvoices(), getDiscounts(), getParents()]);
+
+  const [services, invoices, discounts, customers] = await Promise.all([getServices(), getInvoices(), getDiscounts(), getParents()]);
 
   const {
     data: { user: currentUser },
@@ -59,7 +56,7 @@ const Page = async ({ searchParams }: Props) => {
               <Link className="p-2" href="/admin/payout?tab=invoices">Invoices</Link>
             </TabsTrigger>
             <TabsTrigger value="send invoice">
-              <Link className="p-2" href="/admin/payout?tab=Send Invoice">Invoice Form</Link>
+              <Link className="p-2" href="/admin/payout?tab=send invoice">Invoice Form</Link>
             </TabsTrigger>
           </TabsList>
           <TabsContent value="services">
